@@ -1,4 +1,3 @@
-// Analizador léxico lenguaje K
 lexer grammar Analex;
 
 BLANCO: ' ' ->skip;
@@ -9,6 +8,8 @@ fragment DIGITO: [0-9];
 fragment LETRA:[a-z];
 
 VARIABLES:'VARIABLES';
+FUNCION:'FUNCION';
+PROCEDIMIENTO:'PROCEDIMIENTO';
 VAR: LETRA(LETRA|DIGITO)*;
 DOS_PUNTOS: ':';
 PARENTESIS_ABIERTO : '(';
@@ -18,7 +19,11 @@ COMA: ',';
 NUM:'NUM';
 LOG:'LOG';
 SEQ:'SEQ';
-
+DEV:'DEV';
+MAYOR:'MAYOR';
+MENOR:'MENOR';
+MAYOR_QUE:'MAYOR_QUE_'(LETRA|DIGITO)+;
+MENOR_QUE:'MENOR_QUE_'(LETRA|DIGITO)+;
 MAS: '+';
 MENOS: '-';
 POR: '*';
