@@ -1,3 +1,11 @@
 VARIABLES
+j:NUM;
 i,max,min:NUM;
 s:SEQ(NUM);
+r,j:SEQ(LOG);
+
+FUNCION
+MAYOR(SEQ s) DEV (NUM i, NUM max)
+MENOR(SEQ s) DEV (NUM i, NUM max)
+MAYOR_QUE_5(NUM x) DEV (LOG r)
+
