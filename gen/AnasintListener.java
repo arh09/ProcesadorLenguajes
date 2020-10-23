@@ -1,4 +1,4 @@
-// Generated from C:/Users/dioni/IdeaProjects/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/arubi/IdeaProjects/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -46,16 +46,6 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTipo(Anasint.TipoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Anasint#elemental}.
-	 * @param ctx the parse tree
-	 */
-	void enterElemental(Anasint.ElementalContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#elemental}.
-	 * @param ctx the parse tree
-	 */
-	void exitElemental(Anasint.ElementalContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#no_elemental}.
 	 * @param ctx the parse tree

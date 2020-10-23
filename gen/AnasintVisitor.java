@@ -1,4 +1,4 @@
-// Generated from C:/Users/dioni/IdeaProjects/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/arubi/IdeaProjects/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -33,12 +33,6 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTipo(Anasint.TipoContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link Anasint#elemental}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitElemental(Anasint.ElementalContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#no_elemental}.
 	 * @param ctx the parse tree
