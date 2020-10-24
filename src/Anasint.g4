@@ -3,7 +3,7 @@ options{
  tokenVocab=Analex;
 }
 
-programa: variables subprograma EOF;
+programa: variables subprograma instrucciones EOF;
 
 variables: VARIABLES (vars)+;
 
@@ -41,6 +41,7 @@ func2: VACIA PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERT
 
 func3: ULTIMAPOSICION PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
 
+
 //return valor lógico , entrada puede ser secuencia de números
 predicado: (MAYOR_QUE|MENOR_QUE) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr3)+ PARENTESIS_CERRADO;
 
@@ -54,3 +55,54 @@ expr3: LOG VAR COMA expr3
 procedimiento: PROCEDIMIENTO (proc)+;
 
 proc: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR COMA (expr2)+ PARENTESIS_CERRADO;
+
+//Sin aserto ni función de avance (nivel 2)
+instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+ )+;
+
+asignacion: asignacion_simple | asignacion_multiple;
+
+asignacion_simple: VAR IGUAL CORCHETE_ABIERTO (expr4)+  CORCHETE_CERRADO PyC;
+
+expr4: NUMERO COMA expr4 // 2,5,4,6..
+        | NUMERO;
+
+asignacion_multiple: (expr5)+ IGUAL (expr5)+ PyC;
+
+expr5: VAR (operaciones)? COMA expr5 //puede tener operaciones o no
+    |NUMERO (operaciones)? COMA expr5
+    |NUMERO
+    | VAR;
+
+operaciones: SUMA (VAR|NUMERO)
+            |RESTA (VAR|NUMERO)
+            |MULT (VAR|NUMERO)
+            |DIV (VAR|NUMERO);
+
+//el bloque_opcional sería el SINO , puede que aparezca o no
+condicional:SI condicion (bloque)+ (ruptura)? (bloque_opcional)? FSI;
+
+condicion: condicion1 ENTONCES;
+
+condicion1: PARENTESIS_ABIERTO cond1 cond2 VAR (concatena_operador_logico)* PARENTESIS_CERRADO;
+
+//en caso de que haya un && o ||
+concatena_operador_logico: (AND|OR) cond1 cond2 VAR;
+
+// (p.e s[i] o s)
+cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) CORCHETE_CERRADO
+      |VAR;
+
+//revisar la llamada a predicado aquí , no estoy seguro
+cond2: predicado | IGUALDAD | desigualdades ;
+
+desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
+
+bloque: cond1 (operaciones)? IGUAL cond1 (operaciones)? PyC ;
+
+bloque_opcional: SINO (bloque)+ (ruptura)?;
+
+//dentro del while puede haber if o no , entonces por eso (condicional)?
+iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptura)? (bloque)* FMIENTRAS;
+
+ruptura: RUPTURA PyC;
+
