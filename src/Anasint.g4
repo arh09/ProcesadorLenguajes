@@ -70,8 +70,12 @@ asignacion_multiple: (expr5)+ IGUAL (expr5)+ PyC;
 
 expr5: VAR (operaciones)? COMA expr5 //puede tener operaciones o no
     |NUMERO (operaciones)? COMA expr5
+    |NUMERO COMA expr5
+    | VAR COMA expr5
+    |VAR (operaciones)?//puede tener operaciones o no
+    |NUMERO (operaciones)?
     |NUMERO
-    | VAR;
+    | VAR ;
 
 operaciones: SUMA (VAR|NUMERO)
             |RESTA (VAR|NUMERO)

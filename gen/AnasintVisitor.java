@@ -141,4 +141,112 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProc(Anasint.ProcContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#instrucciones}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInstrucciones(Anasint.InstruccionesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#asignacion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAsignacion(Anasint.AsignacionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#asignacion_simple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAsignacion_simple(Anasint.Asignacion_simpleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#expr4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr4(Anasint.Expr4Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#asignacion_multiple}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAsignacion_multiple(Anasint.Asignacion_multipleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#expr5}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr5(Anasint.Expr5Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#operaciones}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOperaciones(Anasint.OperacionesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#condicional}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondicional(Anasint.CondicionalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#condicion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondicion(Anasint.CondicionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#condicion1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCondicion1(Anasint.Condicion1Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#concatena_operador_logico}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitConcatena_operador_logico(Anasint.Concatena_operador_logicoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#cond1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCond1(Anasint.Cond1Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#cond2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCond2(Anasint.Cond2Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#desigualdades}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDesigualdades(Anasint.DesigualdadesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#bloque}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBloque(Anasint.BloqueContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#bloque_opcional}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBloque_opcional(Anasint.Bloque_opcionalContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#iteracion}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIteracion(Anasint.IteracionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#ruptura}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRuptura(Anasint.RupturaContext ctx);
 }
