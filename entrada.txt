@@ -3,10 +3,21 @@ j:NUM;
 i,max,min:NUM;
 s:SEQ(NUM);
 r,j:SEQ(LOG);
+PROCEDIMIENTO
+MAYOR(SEQ s, NUM i, NUM max)
 
-FUNCION
-MAYOR(SEQ s) DEV (NUM i, NUM max)
-MENOR(SEQ s) DEV (NUM i, NUM max)
-MAYOR_QUE_5(NUM x) DEV (LOG r)
-VACIA (SEQ s) DEV (LOG)
-ULTIMAPOSICION (SEQ s) DEV (NUM)
+INSTRUCCIONES
+
+s = [3,4,2,7,9,0,11];
+x+1,y+x = 1+8,x+2;
+
+
+MIENTRAS (i>=j) HACER
+    SI (s[i]>max && j<i) ENTONCES
+            max=s[i];
+            RUPTURA;
+    FSI
+            RUPTURA;
+            i=i+2;
+
+FMIENTRAS
