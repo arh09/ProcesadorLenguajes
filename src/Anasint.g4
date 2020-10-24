@@ -30,10 +30,16 @@ subprograma: funcion | procedimiento;
 
 funcion:FUNCION (fun)+;
 
-fun: fun1 | predicado;
+fun: func | predicado;
+
+func: func1 |func2 |func3;
 
 //entrada--> secuencia posiblemente vacía , salida--> devuelve parámetros de salida
-fun1: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
+func1: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
+
+func2: VACIA PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr1) PARENTESIS_CERRADO;
+
+func3: ULTIMAPOSICION PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
 
 //return valor lógico , entrada puede ser secuencia de números
 predicado: (MAYOR_QUE|MENOR_QUE) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr3)+ PARENTESIS_CERRADO;
