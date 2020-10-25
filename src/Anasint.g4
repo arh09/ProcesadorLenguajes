@@ -11,7 +11,7 @@ vars: VAR (COMA VAR)* DOS_PUNTOS tipo PyC;
 
 tipo: elemental | no_elemental;
 
-elemental: NUM | LOG ;
+elemental: NUM | LOG;
 
 no_elemental: secuencia_entera | secuencia_logica ;
 
@@ -24,7 +24,6 @@ expr: NUM COMA expr
 
 expr1: LOG COMA expr1
     | LOG;
-
 //el programa puede tenr funciones o procedimientos , las dos a la vez no . Para probar en entrada.txt si pones funcion quitar procedimiento , y al revés , ya que solo puede tener uno de los dos.
 subprograma: funcion | procedimiento;
 
@@ -44,8 +43,16 @@ func2: nombre_funcion DEV PARENTESIS_ABIERTO (expr1) PARENTESIS_CERRADO;
 
 func3: nombre_funcion DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
 
-
 //return valor lógico , entrada puede ser secuencia de números
+// Añadidas expr_booleana  y return
+expr_booleana: T
+     |F;
+
+return: DEV (expr_booleana
+    | VAR COMA return
+    | VAR
+    | NUMERO) PyC;
+
 predicado: (MAYOR_QUE|MENOR_QUE) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr3)+ PARENTESIS_CERRADO;
 
 expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
@@ -53,14 +60,12 @@ expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
 
 expr3: LOG VAR COMA expr3
     | LOG VAR;
-
-
 procedimiento: PROCEDIMIENTO (proc)+;
 
 proc: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR COMA (expr2)+ PARENTESIS_CERRADO;
 
 //Sin aserto ni función de avance (nivel 2)
-instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+ )+;
+instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+)+;
 
 asignacion: asignacion_simple | asignacion_multiple | llamada_a_funcion | llamada_a_procedimiento;
 
@@ -86,7 +91,7 @@ operaciones: SUMA (VAR|NUMERO)
             |DIV (VAR|NUMERO);
 
 //el bloque_opcional sería el SINO , puede que aparezca o no
-condicional:SI condicion (bloque)+ (ruptura)? (bloque_opcional)? FSI;
+condicional:SI condicion (bloque)+ (return)? (ruptura)? (bloque_opcional)? FSI; //Añadida la sentencia return
 
 condicion: condicion1 ENTONCES;
 
@@ -105,13 +110,12 @@ cond2: predicado | IGUALDAD | desigualdades ;
 
 desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 
-bloque: cond1 (operaciones)? IGUAL cond1 (operaciones)? PyC
+bloque: cond1 (operaciones)? (MAY|MEN|MAYORQ|MENORQ|IGUAL) cond1 (operaciones)? PyC //Añadidas mas opciones, solo se contemplaba IGUAL
         |llamada_a_procedimiento;
 
 bloque_opcional: SINO (bloque)+ (ruptura)?;
-
 //dentro del while puede haber if o no , entonces por eso (condicional)?
-iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptura)? (bloque)* FMIENTRAS;
+iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptura)? (bloque)* FMIENTRAS return; //Añadido return al final
 
 ruptura: RUPTURA PyC;
 
