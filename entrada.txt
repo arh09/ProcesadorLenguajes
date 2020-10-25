@@ -1,3 +1,6 @@
+VARIABLES
+    j: NUM;
+
 
 FUNCION MAYOR(SEQ s) DEV (NUM i, NUM max)
 VARIABLES
@@ -26,17 +29,8 @@ MIENTRAS (i>=j) HACER
 FMIENTRAS
 FFUNCION
 
-PROCEDIMIENTO MAYOR(SEQ s, NUM i, NUM max)
-    VARIABLES
-    j: NUM;
-    INSTRUCCIONES
+
+
+ INSTRUCCIONES
     j=0;
     max=s[j];
-    MIENTRAS(j<=ULTIMAPOSICION(s)) HACER
-        SI (s[j]>max) ENTONCES
-            max=s[j];
-            i=j;
-        FSI
-            j=j+1;
-    FMIENTRAS
-FPROCEDIMIENTO
