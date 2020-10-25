@@ -3,7 +3,7 @@ options{
  tokenVocab=Analex;
 }
 
-programa: variables subprograma instrucciones EOF;
+programa: (subprograma variables instrucciones (FFUNCION|FPROCEDIMIENTO))+ EOF;
 
 variables: VARIABLES (vars)+;
 
@@ -34,12 +34,15 @@ fun: func | predicado;
 
 func: func1 |func2 |func3;
 
+nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO
+            | VACIA PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO
+            | ULTIMAPOSICION PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO;
 //entrada--> secuencia posiblemente vacía , salida--> devuelve parámetros de salida
-func1: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
+func1: nombre_funcion  DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
 
-func2: VACIA PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr1) PARENTESIS_CERRADO;
+func2: nombre_funcion DEV PARENTESIS_ABIERTO (expr1) PARENTESIS_CERRADO;
 
-func3: ULTIMAPOSICION PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
+func3: nombre_funcion DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
 
 
 //return valor lógico , entrada puede ser secuencia de números
@@ -59,14 +62,14 @@ proc: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR COMA (expr2)+ PARENTESIS_CERRADO;
 //Sin aserto ni función de avance (nivel 2)
 instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+ )+;
 
-asignacion: asignacion_simple | asignacion_multiple;
+asignacion: asignacion_simple | asignacion_multiple | llamada_a_funcion | llamada_a_procedimiento;
 
 asignacion_simple: VAR IGUAL CORCHETE_ABIERTO (expr4)+  CORCHETE_CERRADO PyC;
 
 expr4: NUMERO COMA expr4 // 2,5,4,6..
         | NUMERO;
 
-asignacion_multiple: (expr5)+ IGUAL (expr5)+ PyC;
+asignacion_multiple: (expr5)+ IGUAL (expr5)+ (CORCHETE_ABIERTO VAR CORCHETE_CERRADO)? PyC;
 
 expr5: VAR (operaciones)? COMA expr5 //puede tener operaciones o no
     |NUMERO (operaciones)? COMA expr5
@@ -87,21 +90,23 @@ condicional:SI condicion (bloque)+ (ruptura)? (bloque_opcional)? FSI;
 
 condicion: condicion1 ENTONCES;
 
-condicion1: PARENTESIS_ABIERTO cond1 cond2 VAR (concatena_operador_logico)* PARENTESIS_CERRADO;
+condicion1: PARENTESIS_ABIERTO cond1 cond2 (VAR|nombre_llamada_funcion) (concatena_operador_logico)* PARENTESIS_CERRADO;
 
 //en caso de que haya un && o ||
-concatena_operador_logico: (AND|OR) cond1 cond2 VAR;
+concatena_operador_logico: (AND|OR) cond1 cond2 (VAR|nombre_llamada_funcion);
 
 // (p.e s[i] o s)
 cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) CORCHETE_CERRADO
-      |VAR;
+      |VAR
+      |NUMERO;
 
 //revisar la llamada a predicado aquí , no estoy seguro
 cond2: predicado | IGUALDAD | desigualdades ;
 
 desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 
-bloque: cond1 (operaciones)? IGUAL cond1 (operaciones)? PyC ;
+bloque: cond1 (operaciones)? IGUAL cond1 (operaciones)? PyC
+        |llamada_a_procedimiento;
 
 bloque_opcional: SINO (bloque)+ (ruptura)?;
 
@@ -110,3 +115,8 @@ iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptur
 
 ruptura: RUPTURA PyC;
 
+llamada_a_funcion: (expr5)+ IGUAL nombre_llamada_funcion PyC;
+
+nombre_llamada_funcion: (MAYOR|MENOR|ULTIMAPOSICION|VACIA) PARENTESIS_ABIERTO (VAR|NUMERO) PARENTESIS_CERRADO;
+
+llamada_a_procedimiento: MOSTRAR PARENTESIS_ABIERTO (expr5) PARENTESIS_CERRADO PyC ;
