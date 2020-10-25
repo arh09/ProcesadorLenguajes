@@ -1,23 +1,42 @@
+
+FUNCION MAYOR(SEQ s) DEV (NUM i, NUM max)
 VARIABLES
 j:NUM;
 i,max,min:NUM;
 s:SEQ(NUM);
 r,j:SEQ(LOG);
-PROCEDIMIENTO
-MAYOR(SEQ s, NUM i, NUM max)
 
 INSTRUCCIONES
-
 s = [3,4,2,7,9,0,11];
 x,y = 1+8,x+2;
-
+x,y = MAYOR(s);
+z = MENOR(y);
+MOSTRAR(z);
 
 MIENTRAS (i>=j) HACER
-    SI (s[i]>max && j<i) ENTONCES
+    SI (s[i]>max && j<MAYOR(s)) ENTONCES
             max=s[i];
+            MOSTRAR(i);
             RUPTURA;
+    SINO
+          min = 0;
     FSI
-            RUPTURA;
             i=i+2;
-
+            MOSTRAR(i);
 FMIENTRAS
+FFUNCION
+
+PROCEDIMIENTO MAYOR(SEQ s, NUM i, NUM max)
+    VARIABLES
+    j: NUM;
+    INSTRUCCIONES
+    j=0;
+    max=s[j];
+    MIENTRAS(j<=ULTIMAPOSICION(s)) HACER
+        SI (s[j]>max) ENTONCES
+            max=s[j];
+            i=j;
+        FSI
+            j=j+1;
+    FMIENTRAS
+FPROCEDIMIENTO
