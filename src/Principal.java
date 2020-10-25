@@ -16,11 +16,12 @@ public class Principal {
         ParseTree tree = anasint.programa();
         JFrame frame = new JFrame("Árbol de Análisis");
         JPanel panel = new JPanel();
+        JScrollPane panel2 = new JScrollPane(panel);
         TreeViewer viewr = new TreeViewer(Arrays.asList(
                 anasint.getRuleNames()),tree);
         viewr.setScale(1);//scale a little
         panel.add(viewr);
-        frame.add(panel);
+        frame.add(panel2);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.setSize(500,400);
