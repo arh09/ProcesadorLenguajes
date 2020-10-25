@@ -3,7 +3,7 @@ options{
  tokenVocab=Analex;
 }
 
-programa: (subprograma variables instrucciones (FFUNCION|FPROCEDIMIENTO))+ EOF;
+programa: variables (subprograma variables instrucciones (FFUNCION|FPROCEDIMIENTO))+ instrucciones EOF;
 
 variables: VARIABLES (vars)+;
 
