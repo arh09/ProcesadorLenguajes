@@ -3,7 +3,7 @@ options{
  tokenVocab=Analex;
 }
 
-programa: variables (subprograma variables instrucciones (FFUNCION|FPROCEDIMIENTO))+ instrucciones EOF;
+programa: variables (subprogramas)+ instrucciones EOF;
 
 variables: VARIABLES (vars)+;
 
@@ -25,6 +25,7 @@ expr: NUM COMA expr
 expr1: LOG COMA expr1
     | LOG;
 
+subprogramas: subprograma variables instrucciones (FFUNCION|FPROCEDIMIENTO);
 //el programa puede tenr funciones o procedimientos , las dos a la vez no . Para probar en entrada.txt si pones funcion quitar procedimiento , y al revés , ya que solo puede tener uno de los dos.
 subprograma: funcion | procedimiento;
 
@@ -87,6 +88,7 @@ operaciones: SUMA (VAR|NUMERO)
 
 //el bloque_opcional sería el SINO , puede que aparezca o no
 condicional:SI condicion (bloque)+ (DEV expr_booleana)? (ruptura)?  (bloque_opcional)?  FSI;
+
 
 condicion: condicion1 ENTONCES;
 
