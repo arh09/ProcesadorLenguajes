@@ -18,11 +18,13 @@ MOSTRAR(z);
 
 MIENTRAS (i>=j) HACER
     SI (s[i]>max && j<MAYOR(s)) ENTONCES
-            max=s[i];
+            max=s[i+1];
             MOSTRAR(i);
+            DEV T
             RUPTURA;
     SINO
           min = 0;
+          DEV F
     FSI
             i=i+2;
             MOSTRAR(i);
