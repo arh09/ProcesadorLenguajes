@@ -11,7 +11,7 @@ vars: VAR (COMA VAR)* DOS_PUNTOS tipo PyC;
 
 tipo: elemental | no_elemental;
 
-elemental: NUM | LOG;
+elemental: NUM | LOG ;
 
 no_elemental: secuencia_entera | secuencia_logica ;
 
@@ -24,6 +24,7 @@ expr: NUM COMA expr
 
 expr1: LOG COMA expr1
     | LOG;
+
 //el programa puede tenr funciones o procedimientos , las dos a la vez no . Para probar en entrada.txt si pones funcion quitar procedimiento , y al revés , ya que solo puede tener uno de los dos.
 subprograma: funcion | procedimiento;
 
@@ -43,16 +44,8 @@ func2: nombre_funcion DEV PARENTESIS_ABIERTO (expr1) PARENTESIS_CERRADO;
 
 func3: nombre_funcion DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
 
+expr_booleana: T |F;
 //return valor lógico , entrada puede ser secuencia de números
-// Añadidas expr_booleana  y return
-expr_booleana: T
-     |F;
-
-return: DEV (expr_booleana
-    | VAR COMA return
-    | VAR
-    | NUMERO) PyC;
-
 predicado: (MAYOR_QUE|MENOR_QUE) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr3)+ PARENTESIS_CERRADO;
 
 expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
@@ -60,12 +53,14 @@ expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
 
 expr3: LOG VAR COMA expr3
     | LOG VAR;
+
+
 procedimiento: PROCEDIMIENTO (proc)+;
 
 proc: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR COMA (expr2)+ PARENTESIS_CERRADO;
 
 //Sin aserto ni función de avance (nivel 2)
-instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+)+;
+instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+ )+;
 
 asignacion: asignacion_simple | asignacion_multiple | llamada_a_funcion | llamada_a_procedimiento;
 
@@ -91,7 +86,7 @@ operaciones: SUMA (VAR|NUMERO)
             |DIV (VAR|NUMERO);
 
 //el bloque_opcional sería el SINO , puede que aparezca o no
-condicional:SI condicion (bloque)+ (return)? (ruptura)? (bloque_opcional)? FSI; //Añadida la sentencia return
+condicional:SI condicion (bloque)+ (DEV expr_booleana)? (ruptura)?  (bloque_opcional)?  FSI;
 
 condicion: condicion1 ENTONCES;
 
@@ -100,8 +95,8 @@ condicion1: PARENTESIS_ABIERTO cond1 cond2 (VAR|nombre_llamada_funcion) (concate
 //en caso de que haya un && o ||
 concatena_operador_logico: (AND|OR) cond1 cond2 (VAR|nombre_llamada_funcion);
 
-// (p.e s[i] o s)
-cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) CORCHETE_CERRADO
+// (p.e s[i] o s o s[i+1]
+cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) (operaciones)? CORCHETE_CERRADO
       |VAR
       |NUMERO;
 
@@ -110,12 +105,13 @@ cond2: predicado | IGUALDAD | desigualdades ;
 
 desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 
-bloque: cond1 (operaciones)? (MAY|MEN|MAYORQ|MENORQ|IGUAL) cond1 (operaciones)? PyC //Añadidas mas opciones, solo se contemplaba IGUAL
+bloque: cond1 (operaciones)? IGUAL cond1 (operaciones)? PyC
         |llamada_a_procedimiento;
 
-bloque_opcional: SINO (bloque)+ (ruptura)?;
+bloque_opcional: SINO (bloque)+ (DEV expr_booleana)? (ruptura)?;
+
 //dentro del while puede haber if o no , entonces por eso (condicional)?
-iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptura)? (bloque)* FMIENTRAS return; //Añadido return al final
+iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptura)? (bloque)* FMIENTRAS;
 
 ruptura: RUPTURA PyC;
 
