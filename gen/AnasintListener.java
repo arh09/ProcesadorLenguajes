@@ -1,4 +1,4 @@
-// Generated from C:/Users/arubi/IdeaProjects/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/dioni/Desktop/pl/proyectoPL/src\Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -16,6 +16,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPrograma(Anasint.ProgramaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#subprogramas}.
+	 * @param ctx the parse tree
+	 */
+	void enterSubprogramas(Anasint.SubprogramasContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#subprogramas}.
+	 * @param ctx the parse tree
+	 */
+	void exitSubprogramas(Anasint.SubprogramasContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#variables}.
 	 * @param ctx the parse tree
@@ -147,6 +157,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitFunc(Anasint.FuncContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Anasint#nombre_funcion}.
+	 * @param ctx the parse tree
+	 */
+	void enterNombre_funcion(Anasint.Nombre_funcionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#nombre_funcion}.
+	 * @param ctx the parse tree
+	 */
+	void exitNombre_funcion(Anasint.Nombre_funcionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Anasint#func1}.
 	 * @param ctx the parse tree
 	 */
@@ -176,6 +196,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunc3(Anasint.Func3Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#expr_booleana}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr_booleana(Anasint.Expr_booleanaContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#expr_booleana}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr_booleana(Anasint.Expr_booleanaContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#predicado}.
 	 * @param ctx the parse tree
@@ -307,6 +337,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitCondicional(Anasint.CondicionalContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Anasint#condicional_si}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondicional_si(Anasint.Condicional_siContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#condicional_si}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondicional_si(Anasint.Condicional_siContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Anasint#condicion}.
 	 * @param ctx the parse tree
 	 */
@@ -406,4 +446,34 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRuptura(Anasint.RupturaContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#llamada_a_funcion}.
+	 * @param ctx the parse tree
+	 */
+	void enterLlamada_a_funcion(Anasint.Llamada_a_funcionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#llamada_a_funcion}.
+	 * @param ctx the parse tree
+	 */
+	void exitLlamada_a_funcion(Anasint.Llamada_a_funcionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#nombre_llamada_funcion}.
+	 * @param ctx the parse tree
+	 */
+	void enterNombre_llamada_funcion(Anasint.Nombre_llamada_funcionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#nombre_llamada_funcion}.
+	 * @param ctx the parse tree
+	 */
+	void exitNombre_llamada_funcion(Anasint.Nombre_llamada_funcionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#llamada_a_procedimiento}.
+	 * @param ctx the parse tree
+	 */
+	void enterLlamada_a_procedimiento(Anasint.Llamada_a_procedimientoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#llamada_a_procedimiento}.
+	 * @param ctx the parse tree
+	 */
+	void exitLlamada_a_procedimiento(Anasint.Llamada_a_procedimientoContext ctx);
 }
