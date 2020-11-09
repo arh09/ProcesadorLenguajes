@@ -3,7 +3,9 @@ options{
  tokenVocab=Analex;
 }
 
-programa: variables (subprogramas)+ instrucciones EOF;
+programa: PROGRAMA (variables)? SUBPROGRAMAS(subprogramas)* (instrucciones)? EOF;
+
+subprogramas: subprograma (variables)? instrucciones (FFUNCION|FPROCEDIMIENTO);
 
 variables: VARIABLES (vars)+;
 
@@ -22,10 +24,11 @@ secuencia_logica:  SEQ PARENTESIS_ABIERTO (expr1)* PARENTESIS_CERRADO;
 expr: NUM COMA expr
      | NUM;
 
-expr1: LOG COMA expr1
-    | LOG;
+expr1: LOG VAR COMA expr1
+    | LOG VAR
+    |LOG COMA expr1
+    |LOG;
 
-subprogramas: subprograma variables instrucciones (FFUNCION|FPROCEDIMIENTO);
 //el programa puede tenr funciones o procedimientos , las dos a la vez no . Para probar en entrada.txt si pones funcion quitar procedimiento , y al revés , ya que solo puede tener uno de los dos.
 subprograma: funcion | procedimiento;
 
@@ -35,7 +38,7 @@ fun: func | predicado;
 
 func: func1 |func2 |func3;
 
-nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO
+nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO
             | VACIA PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO
             | ULTIMAPOSICION PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO;
 //entrada--> secuencia posiblemente vacía , salida--> devuelve parámetros de salida
@@ -47,10 +50,12 @@ func3: nombre_funcion DEV PARENTESIS_ABIERTO (expr) PARENTESIS_CERRADO;
 
 expr_booleana: T |F;
 //return valor lógico , entrada puede ser secuencia de números
-predicado: (MAYOR_QUE|MENOR_QUE) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr3)+ PARENTESIS_CERRADO;
+predicado: (MAYOR_QUE|MENOR_QUE)  PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO (expr3)+ PARENTESIS_CERRADO;
 
 expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
-    | NUM VAR;
+    | NUM VAR
+    | SEQ VAR COMA expr2
+    | SEQ VAR;
 
 expr3: LOG VAR COMA expr3
     | LOG VAR;
@@ -87,15 +92,17 @@ operaciones: SUMA (VAR|NUMERO)
             |DIV (VAR|NUMERO);
 
 //el bloque_opcional sería el SINO , puede que aparezca o no
-condicional:SI condicion (bloque)+ (DEV expr_booleana)? (ruptura)?  (bloque_opcional)?  FSI;
+condicional:(condicional_si)+;
+
+condicional_si:SI condicion (bloque)* (DEV expr_booleana)? (ruptura)?  (bloque_opcional)?  FSI;
 
 
 condicion: condicion1 ENTONCES;
 
-condicion1: PARENTESIS_ABIERTO cond1 cond2 (VAR|nombre_llamada_funcion) (concatena_operador_logico)* PARENTESIS_CERRADO;
+condicion1: PARENTESIS_ABIERTO cond1 cond2 (VAR|nombre_llamada_funcion|NUMERO) (concatena_operador_logico)* PARENTESIS_CERRADO;
 
 //en caso de que haya un && o ||
-concatena_operador_logico: (AND|OR) cond1 cond2 (VAR|nombre_llamada_funcion);
+concatena_operador_logico: (AND|OR) cond1 cond2 (VAR|nombre_llamada_funcion|NUMERO);
 
 // (p.e s[i] o s o s[i+1]
 cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) (operaciones)? CORCHETE_CERRADO
@@ -110,7 +117,7 @@ desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 bloque: cond1 (operaciones)? IGUAL cond1 (operaciones)? PyC
         |llamada_a_procedimiento;
 
-bloque_opcional: SINO (bloque)+ (DEV expr_booleana)? (ruptura)?;
+bloque_opcional: SINO (bloque)* (DEV expr_booleana)? (ruptura)?;
 
 //dentro del while puede haber if o no , entonces por eso (condicional)?
 iteracion: MIENTRAS condicion1 HACER (bloque)* (ruptura)? (condicional)? (ruptura)? (bloque)* FMIENTRAS;
