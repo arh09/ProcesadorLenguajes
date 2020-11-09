@@ -7,7 +7,7 @@ VARIABLES
 j:NUM;
     INSTRUCCIONES
         si (x>5) entonces
-        max = s[y];
+        max = s[z];
         min = s[x];
             dev T
             ruptura;
