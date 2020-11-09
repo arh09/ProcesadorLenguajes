@@ -1,8 +1,10 @@
+PROGRAMA
+
 VARIABLES
     j: NUM;
 
-
-FUNCION MAYOR(SEQ s) DEV (NUM i, NUM max)
+SUBPROGRAMAS
+FUNCION mayor(SEQ s) dev (NUM i, NUM max)
 VARIABLES
 j:NUM;
 i,max,min:NUM;
@@ -12,23 +14,24 @@ r,j:SEQ(LOG);
 INSTRUCCIONES
 s = [3,4,2,7,9,0,11];
 x,y = 1+8,x+2;
-x,y = MAYOR(s);
-z = MENOR(y);
-MOSTRAR(z);
+x,y = mayor(s);
+z = menor(y);
+mostrar(z);
 
-MIENTRAS (i>=j) HACER
-    SI (s[i]>max && j<MAYOR(s)) ENTONCES
+mientras (i>=j) hacer
+    si (s[i]>max && j<mayor(s)) entonces
             max=s[i+1];
-            MOSTRAR(i);
-            DEV T
-            RUPTURA;
-    SINO
+            mostrar(i);
+            dev T
+            ruptura;
+    sino
           min = 0;
-          DEV F
-    FSI
+          dev F
+    fsi
             i=i+2;
-            MOSTRAR(i);
-FMIENTRAS
+            mostrar(i);
+
+fmientras
 FFUNCION
 
 
