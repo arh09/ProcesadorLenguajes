@@ -1,15 +1,27 @@
+PROGRAMA
 VARIABLES
-j:NUM;
 i,max,min:NUM;
 s:SEQ(NUM);
-r,j:SEQ(LOG);
 
-FUNCION
-MAYOR(SEQ s) DEV (NUM i, NUM max)
-MENOR(SEQ s) DEV (NUM i, NUM max)
-MAYOR_QUE_5(NUM x) DEV (LOG r)
-VACIA (SEQ s) DEV (LOG)
-ULTIMAPOSICION (SEQ s) DEV (NUM)
+SUBPROGRAMAS
 
 INSTRUCCIONES
-s = [3,4,2,7,9,0,11];
+
+s=[3,4,2,7,9,0,11];
+i=0;
+mostrar(i);
+min=s[i];
+max=s[i];
+    mientras (i<=ultima_posicion(s) && i==max) hacer
+        si (s[i]>max) entonces
+            max=s[i];
+        sino
+            x=2;
+        fsi
+        si (s[i]<min) entonces
+            min=s[i];
+            fsi
+mostrar(min,max);
+
+i=i+1;
+fmientras
