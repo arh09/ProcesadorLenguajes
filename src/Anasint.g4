@@ -120,7 +120,8 @@ cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) (operaciones)? CORCHETE_CERRADO
       |VAR
       |NUMERO;
 
-//revisar la llamada a predicado aquí , no estoy seguro
+
+
 cond2: predicado | IGUALDAD | desigualdades ;
 
 desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
