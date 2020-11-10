@@ -27,6 +27,26 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitSubprogramas(Anasint.SubprogramasContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Anasint#retorno}.
+	 * @param ctx the parse tree
+	 */
+	void enterRetorno(Anasint.RetornoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#retorno}.
+	 * @param ctx the parse tree
+	 */
+	void exitRetorno(Anasint.RetornoContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#exprRetorno}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprRetorno(Anasint.ExprRetornoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#exprRetorno}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprRetorno(Anasint.ExprRetornoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Anasint#variables}.
 	 * @param ctx the parse tree
 	 */
@@ -256,6 +276,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitProc(Anasint.ProcContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#exprProc}.
+	 * @param ctx the parse tree
+	 */
+	void enterExprProc(Anasint.ExprProcContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#exprProc}.
+	 * @param ctx the parse tree
+	 */
+	void exitExprProc(Anasint.ExprProcContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#instrucciones}.
 	 * @param ctx the parse tree

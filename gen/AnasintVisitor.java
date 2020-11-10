@@ -22,6 +22,18 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSubprogramas(Anasint.SubprogramasContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Anasint#retorno}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRetorno(Anasint.RetornoContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#exprRetorno}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprRetorno(Anasint.ExprRetornoContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link Anasint#variables}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -159,6 +171,12 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitProc(Anasint.ProcContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#exprProc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprProc(Anasint.ExprProcContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#instrucciones}.
 	 * @param ctx the parse tree

@@ -5,7 +5,12 @@ options{
 
 programa: PROGRAMA (variables)? SUBPROGRAMAS(subprogramas)* (instrucciones)? EOF;
 
-subprogramas: subprograma (variables)? instrucciones (FFUNCION|FPROCEDIMIENTO);
+subprogramas: subprograma (variables)? instrucciones (retorno)? (FFUNCION|FPROCEDIMIENTO);
+
+retorno: DEV exprRetorno;
+
+exprRetorno: VAR COMA exprRetorno PyC
+            | VAR;
 
 variables: VARIABLES (vars)+;
 
@@ -29,7 +34,7 @@ expr1: LOG VAR COMA expr1
     |LOG COMA expr1
     |LOG;
 
-//el programa puede tenr funciones o procedimientos , las dos a la vez no . Para probar en entrada.txt si pones funcion quitar procedimiento , y al revés , ya que solo puede tener uno de los dos.
+//el programa puede tenr funciones o procedimientos
 subprograma: funcion | procedimiento;
 
 funcion:FUNCION (fun)+;
@@ -38,9 +43,9 @@ fun: func | predicado;
 
 func: func1 |func2 |func3;
 
-nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO
-            | VACIA PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO
-            | ULTIMAPOSICION PARENTESIS_ABIERTO SEQ VAR PARENTESIS_CERRADO;
+nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
+
+
 //entrada--> secuencia posiblemente vacía , salida--> devuelve parámetros de salida
 func1: nombre_funcion  DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
 
@@ -63,7 +68,13 @@ expr3: LOG VAR COMA expr3
 
 procedimiento: PROCEDIMIENTO (proc)+;
 
-proc: (MAYOR|MENOR) PARENTESIS_ABIERTO SEQ VAR COMA (expr2)+ PARENTESIS_CERRADO;
+proc: (MAYOR|MENOR) PARENTESIS_ABIERTO exprProc PARENTESIS_CERRADO;
+
+exprProc: SEQ VAR COMA exprProc
+        |SEQ VAR
+        |NUM VAR COMA exprProc
+        |NUM VAR
+        |;
 
 //Sin aserto ni función de avance (nivel 2)
 instrucciones: INSTRUCCIONES ((asignacion)+ | (condicional)+ | (iteracion)+ )+;
@@ -81,7 +92,7 @@ expr5: VAR (operaciones)? COMA expr5 //puede tener operaciones o no
     |NUMERO (operaciones)? COMA expr5
     |NUMERO COMA expr5
     | VAR COMA expr5
-    |VAR (operaciones)?//puede tener operaciones o no
+    |VAR (operaciones)?
     |NUMERO (operaciones)?
     |NUMERO
     | VAR ;

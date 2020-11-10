@@ -39,6 +39,30 @@ public class AnasintBaseListener implements AnasintListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterRetorno(Anasint.RetornoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitRetorno(Anasint.RetornoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprRetorno(Anasint.ExprRetornoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprRetorno(Anasint.ExprRetornoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterVariables(Anasint.VariablesContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -310,6 +334,18 @@ public class AnasintBaseListener implements AnasintListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitProc(Anasint.ProcContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExprProc(Anasint.ExprProcContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExprProc(Anasint.ExprProcContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
