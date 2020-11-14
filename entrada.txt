@@ -2,9 +2,9 @@ PROGRAMA
 
 VARIABLES
     j: NUM;
-
+    m: LOG;
 SUBPROGRAMAS
-FUNCION mayor(SEQ s) dev (NUM i, NUM max)
+FUNCION mayor(SEQ(NUM) s) dev (NUM i, NUM max)
 VARIABLES
 j:NUM;
 i,max,min:NUM;
@@ -13,7 +13,7 @@ r,j:SEQ(LOG);
 
 INSTRUCCIONES
 s = [3,4,2,7,9,0,11];
-x,y = 1+8,x+2;
+x= 1+8;
 x,y = mayor(s);
 z = menor(y);
 mostrar(z);
@@ -22,11 +22,11 @@ mientras (i>=j) hacer
     si (s[i]>max && j<mayor(s)) entonces
             max=s[i+1];
             mostrar(i);
-            dev T
+            dev T;
             ruptura;
     sino
           min = 0;
-          dev F
+          dev F;
     fsi
             i=i+2;
             mostrar(i);
@@ -39,3 +39,5 @@ FFUNCION
  INSTRUCCIONES
     j=0;
     max=s[j];
+    m=T;
+

@@ -1,0 +1,18 @@
+PROGRAMA
+VARIABLES
+i:NUM;
+j:LOG;
+s:SEQ(LOG);
+p:SEQ(NUM);
+SUBPROGRAMAS
+FUNCION mayor_que_5(NUM x) dev (LOG r)
+VARIABLES
+INSTRUCCIONES
+si(x>5 && x>3 || x==4)
+entonces
+dev T;
+sino
+dev F;
+fsi
+FFUNCION
+INSTRUCCIONES

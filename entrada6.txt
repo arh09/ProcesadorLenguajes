@@ -1,6 +1,7 @@
 PROGRAMA
 VARIABLES
     j:NUM;
+    p:SEQ(LOG);
 SUBPROGRAMAS
 PROCEDIMIENTO mayor()
 VARIABLES
@@ -9,10 +10,12 @@ INSTRUCCIONES
 j=0;
 max=s[j];
 mientras(j<=ultima_posicion(s)) hacer
-si (s[j]>max) entonces
+si (5>max) entonces
 max=s[j];
 i=j;
 fsi
 j=j+1;
 fmientras
 FPROCEDIMIENTO
+INSTRUCCIONES
+j,p = 3,[x+3,y];

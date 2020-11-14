@@ -2,9 +2,9 @@
 //post: max es el elemento maximo de s e i es la posición en la que
 // se encuentra.
 PROGRAMA
-
+VARIABLES
 SUBPROGRAMAS
-PROCEDIMIENTO mayor(SEQ s, NUM i, NUM max)
+PROCEDIMIENTO mayor(SEQ(LOG) s, NUM i, NUM max)
 VARIABLES
 j: NUM;
 INSTRUCCIONES
@@ -22,4 +22,4 @@ max=s[j];
     j=j+1;
     fmientras
 FPROCEDIMIENTO
-
+INSTRUCCIONES

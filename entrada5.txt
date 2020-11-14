@@ -1,7 +1,7 @@
 PROGRAMA
-
+VARIABLES
 SUBPROGRAMAS
-FUNCION mayor(SEQ s) dev (NUM i, NUM max)
+FUNCION mayor(SEQ(NUM) s) dev (NUM i, NUM max)
 VARIABLES
 j: NUM;
 INSTRUCCIONES
@@ -16,3 +16,4 @@ j=j+1;
 fmientras
 dev max,i; //retorno de parámetros de salida.
 FFUNCION
+INSTRUCCIONES

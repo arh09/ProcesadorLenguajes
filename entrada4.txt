@@ -1,20 +1,21 @@
 PROGRAMA
-
+VARIABLES
 SUBPROGRAMAS
 
-FUNCION mayor(NUM x,NUM y) dev (LOG r)
+FUNCION mayor(NUM x,NUM y) dev (NUM r)
 VARIABLES
 j:NUM;
     INSTRUCCIONES
         si (x>5) entonces
         max = s[z];
         min = s[x];
-            dev T
+            dev T;
             ruptura;
         sino
             x=2;
             mostrar(z);
-            dev F
+            dev F;
         fsi
 FFUNCION
 
+INSTRUCCIONES
