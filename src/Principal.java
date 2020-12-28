@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 public class Principal {
     public static void main(String[] args) throws Exception{
-        CharStream input = CharStreams.fromFileName("entrada2.txt");
+        CharStream input = CharStreams.fromFileName("level2_sem_1.txt");
         Analex analex = new Analex(input);
         CommonTokenStream tokens = new CommonTokenStream(analex);
         Anasint anasint = new Anasint(tokens);

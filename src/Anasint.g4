@@ -113,14 +113,12 @@ operaciones: SUMA (expresion_binaria)
 //el bloque_opcional sería el SINO , puede que aparezca o no
 condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;
 
-condicion: PARENTESIS_ABIERTO expr5 (cond2 expr5)? (concatena_operador_logico)* PARENTESIS_CERRADO;
+condicion: PARENTESIS_ABIERTO expr5 (desigualdades expr5)? (concatena_operador_logico)* PARENTESIS_CERRADO;
 
 //en caso de que haya un && o ||
-concatena_operador_logico: (AND|OR) expr5 (cond2 expr5)?;
+concatena_operador_logico: (AND|OR) expr5 (desigualdades expr5)?;
 
-cond2: IGUALDAD | desigualdades ;
-
-desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
+desigualdades: IGUALDAD | MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 
 
 bloque_opcional: SINO instrucciones;
@@ -136,4 +134,4 @@ nombre_llamada_funcion: expresionF PARENTESIS_ABIERTO (expr5)? PARENTESIS_CERRAD
 
 llamada_a_procedimiento: expresionF PARENTESIS_ABIERTO (expr5)? PARENTESIS_CERRADO PyC ;
 
-devolucion: DEV (NUMERO | expresion_logica)(COMA (NUMERO | expresion_logica))* PyC;
+devolucion: DEV expr5 PyC;

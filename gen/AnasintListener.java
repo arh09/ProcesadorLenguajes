@@ -1,4 +1,4 @@
-// Generated from C:/Users/arubi/IdeaProjects/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from /home/alberto/IdeaProjects/Procesadores de Lenguajes/Proyecto/proyectoPL/src/Anasint.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -36,6 +36,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVars(Anasint.VarsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#varRecurs}.
+	 * @param ctx the parse tree
+	 */
+	void enterVarRecurs(Anasint.VarRecursContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#varRecurs}.
+	 * @param ctx the parse tree
+	 */
+	void exitVarRecurs(Anasint.VarRecursContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#tipo}.
 	 * @param ctx the parse tree
@@ -97,6 +107,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitFun(Anasint.FunContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Anasint#expresionF}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpresionF(Anasint.ExpresionFContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#expresionF}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpresionF(Anasint.ExpresionFContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Anasint#nombre_funcion}.
 	 * @param ctx the parse tree
 	 */
@@ -116,6 +136,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunc(Anasint.FuncContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#retornoFuncion}.
+	 * @param ctx the parse tree
+	 */
+	void enterRetornoFuncion(Anasint.RetornoFuncionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#retornoFuncion}.
+	 * @param ctx the parse tree
+	 */
+	void exitRetornoFuncion(Anasint.RetornoFuncionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#expr_booleana}.
 	 * @param ctx the parse tree
@@ -137,15 +167,53 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitPredicado(Anasint.PredicadoContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#expr2}.
+	 * Enter a parse tree produced by the {@code NumVarComa}
+	 * labeled alternative in {@link Anasint#expr2}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpr2(Anasint.Expr2Context ctx);
+	void enterNumVarComa(Anasint.NumVarComaContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#expr2}.
+	 * Exit a parse tree produced by the {@code NumVarComa}
+	 * labeled alternative in {@link Anasint#expr2}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpr2(Anasint.Expr2Context ctx);
+	void exitNumVarComa(Anasint.NumVarComaContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code NumVar}
+	 * labeled alternative in {@link Anasint#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterNumVar(Anasint.NumVarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code NumVar}
+	 * labeled alternative in {@link Anasint#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitNumVar(Anasint.NumVarContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SeqVarComa}
+	 * labeled alternative in {@link Anasint#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterSeqVarComa(Anasint.SeqVarComaContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SeqVarComa}
+	 * labeled alternative in {@link Anasint#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitSeqVarComa(Anasint.SeqVarComaContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SeqVar}
+	 * labeled alternative in {@link Anasint#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterSeqVar(Anasint.SeqVarContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SeqVar}
+	 * labeled alternative in {@link Anasint#expr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitSeqVar(Anasint.SeqVarContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#procedimiento}.
 	 * @param ctx the parse tree
@@ -347,16 +415,6 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitCondicional(Anasint.CondicionalContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#condicional_si}.
-	 * @param ctx the parse tree
-	 */
-	void enterCondicional_si(Anasint.Condicional_siContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#condicional_si}.
-	 * @param ctx the parse tree
-	 */
-	void exitCondicional_si(Anasint.Condicional_siContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link Anasint#condicion}.
 	 * @param ctx the parse tree
 	 */
@@ -376,26 +434,6 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConcatena_operador_logico(Anasint.Concatena_operador_logicoContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link Anasint#cond1}.
-	 * @param ctx the parse tree
-	 */
-	void enterCond1(Anasint.Cond1Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#cond1}.
-	 * @param ctx the parse tree
-	 */
-	void exitCond1(Anasint.Cond1Context ctx);
-	/**
-	 * Enter a parse tree produced by {@link Anasint#cond2}.
-	 * @param ctx the parse tree
-	 */
-	void enterCond2(Anasint.Cond2Context ctx);
-	/**
-	 * Exit a parse tree produced by {@link Anasint#cond2}.
-	 * @param ctx the parse tree
-	 */
-	void exitCond2(Anasint.Cond2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#desigualdades}.
 	 * @param ctx the parse tree
