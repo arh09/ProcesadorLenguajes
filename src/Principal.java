@@ -26,5 +26,8 @@ public class Principal {
 
         frame.setSize(500,400);
         frame.setVisible(true);
+
+        Anasem anasem = new Anasem();
+        anasem.visit(tree);
     }
 }
