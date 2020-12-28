@@ -3,45 +3,50 @@ options{
  tokenVocab=Analex;
 }
 
-programa: PROGRAMA VARIABLES(variables)? SUBPROGRAMAS(subprogramas)* INSTRUCCIONES(instrucciones)? EOF;
+programa: PROGRAMA variables subprogramas INSTRUCCIONES instrucciones EOF;
 
-variables: (vars)+;
+variables: VARIABLES (vars)*;
 
-vars: VAR (COMA VAR)* DOS_PUNTOS tipo PyC;
+vars: varRecurs DOS_PUNTOS tipo PyC;
+
+varRecurs: VAR (COMA varRecurs)*;
 
 tipo: elemental | no_elemental;
 
 elemental: NUM | LOG ;
 
-no_elemental: SEQ PARENTESIS_ABIERTO (NUM | LOG) PARENTESIS_CERRADO;
+no_elemental: SEQ_NUM | SEQ_LOG;
 
 //el programa puede tenr funciones o procedimientos
-subprogramas: funcion | procedimiento;
+subprogramas:SUBPROGRAMAS (funcion | procedimiento)*;
 
-funcion:FUNCION (fun)+ VARIABLES(variables)? INSTRUCCIONES(instrucciones)* FFUNCION;
+funcion:FUNCION fun variables INSTRUCCIONES instrucciones FFUNCION;
 
 fun: func | predicado;
 
-nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO (expr2)* PARENTESIS_CERRADO;
+expresionF: VAR (BB (VAR|NUMERO))*;
+
+nombre_funcion: expresionF PARENTESIS_ABIERTO (expr2)* PARENTESIS_CERRADO;
 
 
 //entrada--> secuencia posiblemente vacía , salida--> devuelve parámetros de salida
-func: nombre_funcion  DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
+func: nombre_funcion  retornoFuncion;
+
+retornoFuncion: DEV PARENTESIS_ABIERTO expr2 PARENTESIS_CERRADO;
 
 expr_booleana: T |F;
 //return valor lógico , entrada puede ser secuencia de números
-predicado: (MAYOR_QUE|MENOR_QUE) NUMERO PARENTESIS_ABIERTO (expr2)* PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
+predicado: expresionF PARENTESIS_ABIERTO (expr2)* PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
 
-expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
-    | NUM VAR
-    | no_elemental VAR COMA expr2
-    | no_elemental VAR
+expr2: NUM VAR COMA expr2  #NumVarComa
+    | NUM VAR               #NumVar
+    | no_elemental VAR COMA expr2 #SeqVarComa
+    | no_elemental VAR             #SeqVar
     ;
 
+procedimiento: PROCEDIMIENTO proc variables INSTRUCCIONES instrucciones FPROCEDIMIENTO;
 
-procedimiento: PROCEDIMIENTO (proc)+ VARIABLES(variables)? INSTRUCCIONES(instrucciones)? FPROCEDIMIENTO;
-
-proc: (MAYOR|MENOR) PARENTESIS_ABIERTO exprProc PARENTESIS_CERRADO;
+proc: expresionF PARENTESIS_ABIERTO exprProc PARENTESIS_CERRADO;
 
 exprProc: no_elemental VAR COMA exprProc
         | no_elemental VAR
@@ -50,42 +55,48 @@ exprProc: no_elemental VAR COMA exprProc
         |;
 
 //Sin aserto ni función de avance (nivel 2)
-instrucciones: ((asignacion)+ | (condicional)+ | (iteracion)+ | (ruptura)+ | (devolucion)+ | (llamada_a_funcion)+ | (llamada_a_procedimiento)+)+;
+instrucciones: ((asignacion) | (condicional) | (iteracion) | (ruptura) | (devolucion) | (llamada_a_funcion) | (llamada_a_procedimiento))*;
 
 asignacion: asignacion_simple | asignacion_multiple;
 
 asignacion_simple: asignacion_binaria | asignacion_logica | asignacion_secuencia;
 //VAR IGUAL CORCHETE_ABIERTO (expr4)+  CORCHETE_CERRADO PyC;
 
+
 asignacion_binaria: VAR IGUAL expresion_binaria PyC;
 
 expresion_binaria: NUMERO
     | VAR
-    | NUMERO (operaciones)?
-    | VAR (operaciones)?
+    | NUMERO (operaciones)*
+    | VAR (operaciones)*
+    | PARENTESIS_ABIERTO expresion_binaria PARENTESIS_CERRADO
+    | nombre_llamada_funcion
     ;
+
 
 asignacion_logica: VAR IGUAL expresion_logica PyC;
 
-expresion_logica: T
-    | F
-    | VAR
+expresion_logica: (NEGACION)?T
+    | (NEGACION)?F
+    | (NEGACION)?VAR
+    | (NEGACION)?nombre_llamada_funcion
+    | (NEGACION)?llamada_a_procedimiento
     ;
 
 expresion_secuencia: elemento_secuencia | secuencia_completa ;
 
-elemento_secuencia : VAR CORCHETE_ABIERTO (VAR | NUMERO)(operaciones)? CORCHETE_CERRADO;
-secuencia_completa: CORCHETE_ABIERTO (sec_binaria | sec_logica) CORCHETE_CERRADO;
+elemento_secuencia : VAR CORCHETE_ABIERTO expresion_binaria CORCHETE_CERRADO;
+secuencia_completa: CORCHETE_ABIERTO (sec_binaria | sec_logica)? CORCHETE_CERRADO;
 
-sec_binaria: (NUMERO| VAR)(operaciones)? COMA sec_binaria// 2,5,4,6..
-        | (NUMERO| VAR)(operaciones)?;
+sec_binaria: expresion_binaria COMA sec_binaria// 2,5,4,6..
+        | expresion_binaria ;
 
 sec_logica: expresion_logica COMA sec_logica //T,T,F,F,T...
         | expresion_logica;
 
 asignacion_secuencia: VAR IGUAL expresion_secuencia PyC ;
 
-asignacion_multiple: VAR (COMA VAR)+ IGUAL (expr5)+ PyC;
+asignacion_multiple: VAR (CORCHETE_ABIERTO expresion_binaria CORCHETE_CERRADO)? (COMA VAR (CORCHETE_ABIERTO expresion_binaria CORCHETE_CERRADO)?)+ IGUAL (expr5)+ PyC;
 
 expr5: expresion_binaria COMA expr5 //puede tener operaciones o no
     | expresion_binaria
@@ -94,44 +105,35 @@ expr5: expresion_binaria COMA expr5 //puede tener operaciones o no
     | expresion_secuencia COMA expr5
     | expresion_secuencia;
 
-operaciones: SUMA (VAR|NUMERO)
-            |RESTA (VAR|NUMERO)
-            |MULT (VAR|NUMERO)
-            |DIV (VAR|NUMERO);
+operaciones: SUMA (expresion_binaria)
+            |RESTA (expresion_binaria)
+            |MULT (expresion_binaria)
+            |DIV (expresion_binaria);
 
 //el bloque_opcional sería el SINO , puede que aparezca o no
-condicional:(condicional_si)+;
+condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;
 
-condicional_si:SI condicion ENTONCES (instrucciones)* (bloque_opcional)? FSI;
-
-condicion: PARENTESIS_ABIERTO cond1 cond2 (VAR|nombre_llamada_funcion|NUMERO) (concatena_operador_logico)* PARENTESIS_CERRADO;
+condicion: PARENTESIS_ABIERTO expr5 (cond2 expr5)? (concatena_operador_logico)* PARENTESIS_CERRADO;
 
 //en caso de que haya un && o ||
-concatena_operador_logico: (AND|OR) cond1 cond2 (VAR|nombre_llamada_funcion|NUMERO);
+concatena_operador_logico: (AND|OR) expr5 (cond2 expr5)?;
 
-// (p.e s[i] o s o s[i+1]
-cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) (operaciones)? CORCHETE_CERRADO
-      |VAR
-      |NUMERO;
-
-
-
-cond2: predicado | IGUALDAD | desigualdades ;
+cond2: IGUALDAD | desigualdades ;
 
 desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 
 
-bloque_opcional: SINO (instrucciones)*;
+bloque_opcional: SINO instrucciones;
 
 //dentro del while puede haber if o no , entonces por eso (condicional)?
-iteracion: MIENTRAS condicion HACER (instrucciones)* FMIENTRAS;
+iteracion: MIENTRAS condicion HACER instrucciones FMIENTRAS;
 
 ruptura: RUPTURA PyC;
 
 llamada_a_funcion: (expr5)+ IGUAL nombre_llamada_funcion PyC;
 
-nombre_llamada_funcion: (MAYOR|MENOR|ULTIMAPOSICION|VACIA) PARENTESIS_ABIERTO (VAR|NUMERO) PARENTESIS_CERRADO;
+nombre_llamada_funcion: expresionF PARENTESIS_ABIERTO (expr5)? PARENTESIS_CERRADO;
 
-llamada_a_procedimiento: MOSTRAR PARENTESIS_ABIERTO (expr5) PARENTESIS_CERRADO PyC ;
+llamada_a_procedimiento: expresionF PARENTESIS_ABIERTO (expr5)? PARENTESIS_CERRADO PyC ;
 
 devolucion: DEV (NUMERO | expresion_logica)(COMA (NUMERO | expresion_logica))* PyC;
