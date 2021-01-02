@@ -1868,7 +1868,93 @@ public class Anasint extends Parser {
 	}
 
 	public static class Expresion_binariaContext extends ParserRuleContext {
+		public Expresion_binariaContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expresion_binaria; }
+	 
+		public Expresion_binariaContext() { }
+		public void copyFrom(Expresion_binariaContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class BinNumOpContext extends Expresion_binariaContext {
 		public TerminalNode NUMERO() { return getToken(Anasint.NUMERO, 0); }
+		public List<OperacionesContext> operaciones() {
+			return getRuleContexts(OperacionesContext.class);
+		}
+		public OperacionesContext operaciones(int i) {
+			return getRuleContext(OperacionesContext.class,i);
+		}
+		public BinNumOpContext(Expresion_binariaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterBinNumOp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitBinNumOp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitBinNumOp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinFunContext extends Expresion_binariaContext {
+		public Nombre_llamada_funcionContext nombre_llamada_funcion() {
+			return getRuleContext(Nombre_llamada_funcionContext.class,0);
+		}
+		public BinFunContext(Expresion_binariaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterBinFun(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitBinFun(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitBinFun(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinNumContext extends Expresion_binariaContext {
+		public TerminalNode NUMERO() { return getToken(Anasint.NUMERO, 0); }
+		public BinNumContext(Expresion_binariaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterBinNum(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitBinNum(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitBinNum(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinVarContext extends Expresion_binariaContext {
+		public TerminalNode VAR() { return getToken(Anasint.VAR, 0); }
+		public BinVarContext(Expresion_binariaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterBinVar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitBinVar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitBinVar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinVarOpContext extends Expresion_binariaContext {
 		public TerminalNode VAR() { return getToken(Anasint.VAR, 0); }
 		public List<OperacionesContext> operaciones() {
 			return getRuleContexts(OperacionesContext.class);
@@ -1876,29 +1962,39 @@ public class Anasint extends Parser {
 		public OperacionesContext operaciones(int i) {
 			return getRuleContext(OperacionesContext.class,i);
 		}
+		public BinVarOpContext(Expresion_binariaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterBinVarOp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitBinVarOp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitBinVarOp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class BinParentContext extends Expresion_binariaContext {
 		public TerminalNode PARENTESIS_ABIERTO() { return getToken(Anasint.PARENTESIS_ABIERTO, 0); }
 		public Expresion_binariaContext expresion_binaria() {
 			return getRuleContext(Expresion_binariaContext.class,0);
 		}
 		public TerminalNode PARENTESIS_CERRADO() { return getToken(Anasint.PARENTESIS_CERRADO, 0); }
-		public Nombre_llamada_funcionContext nombre_llamada_funcion() {
-			return getRuleContext(Nombre_llamada_funcionContext.class,0);
-		}
-		public Expresion_binariaContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expresion_binaria; }
+		public BinParentContext(Expresion_binariaContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExpresion_binaria(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterBinParent(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExpresion_binaria(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitBinParent(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExpresion_binaria(this);
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitBinParent(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1912,6 +2008,7 @@ public class Anasint extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 			case 1:
+				_localctx = new BinNumContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(264);
@@ -1919,6 +2016,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new BinVarContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(265);
@@ -1926,6 +2024,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new BinNumOpContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(266);
@@ -1949,6 +2048,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new BinVarOpContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(273);
@@ -1972,6 +2072,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 5:
+				_localctx = new BinParentContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(280);
@@ -1983,6 +2084,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 6:
+				_localctx = new BinFunContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(284);
@@ -2056,31 +2158,107 @@ public class Anasint extends Parser {
 	}
 
 	public static class Expresion_logicaContext extends ParserRuleContext {
-		public TerminalNode T() { return getToken(Anasint.T, 0); }
-		public TerminalNode NEGACION() { return getToken(Anasint.NEGACION, 0); }
-		public TerminalNode F() { return getToken(Anasint.F, 0); }
-		public TerminalNode VAR() { return getToken(Anasint.VAR, 0); }
-		public Nombre_llamada_funcionContext nombre_llamada_funcion() {
-			return getRuleContext(Nombre_llamada_funcionContext.class,0);
-		}
-		public Llamada_a_procedimientoContext llamada_a_procedimiento() {
-			return getRuleContext(Llamada_a_procedimientoContext.class,0);
-		}
 		public Expresion_logicaContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_expresion_logica; }
+	 
+		public Expresion_logicaContext() { }
+		public void copyFrom(Expresion_logicaContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ExprLogTrueContext extends Expresion_logicaContext {
+		public TerminalNode T() { return getToken(Anasint.T, 0); }
+		public TerminalNode NEGACION() { return getToken(Anasint.NEGACION, 0); }
+		public ExprLogTrueContext(Expresion_logicaContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExpresion_logica(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExprLogTrue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExpresion_logica(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExprLogTrue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExpresion_logica(this);
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExprLogTrue(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExprLogFunContext extends Expresion_logicaContext {
+		public Nombre_llamada_funcionContext nombre_llamada_funcion() {
+			return getRuleContext(Nombre_llamada_funcionContext.class,0);
+		}
+		public TerminalNode NEGACION() { return getToken(Anasint.NEGACION, 0); }
+		public ExprLogFunContext(Expresion_logicaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExprLogFun(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExprLogFun(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExprLogFun(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExprLogProcContext extends Expresion_logicaContext {
+		public Llamada_a_procedimientoContext llamada_a_procedimiento() {
+			return getRuleContext(Llamada_a_procedimientoContext.class,0);
+		}
+		public TerminalNode NEGACION() { return getToken(Anasint.NEGACION, 0); }
+		public ExprLogProcContext(Expresion_logicaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExprLogProc(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExprLogProc(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExprLogProc(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExprLogFalseContext extends Expresion_logicaContext {
+		public TerminalNode F() { return getToken(Anasint.F, 0); }
+		public TerminalNode NEGACION() { return getToken(Anasint.NEGACION, 0); }
+		public ExprLogFalseContext(Expresion_logicaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExprLogFalse(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExprLogFalse(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExprLogFalse(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ExprLogVarContext extends Expresion_logicaContext {
+		public TerminalNode VAR() { return getToken(Anasint.VAR, 0); }
+		public TerminalNode NEGACION() { return getToken(Anasint.NEGACION, 0); }
+		public ExprLogVarContext(Expresion_logicaContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterExprLogVar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitExprLogVar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitExprLogVar(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2094,6 +2272,7 @@ public class Anasint extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,23,_ctx) ) {
 			case 1:
+				_localctx = new ExprLogTrueContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(293);
@@ -2111,6 +2290,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new ExprLogFalseContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(297);
@@ -2128,6 +2308,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new ExprLogVarContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(301);
@@ -2145,6 +2326,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new ExprLogFunContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(305);
@@ -2162,6 +2344,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case 5:
+				_localctx = new ExprLogProcContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(309);
@@ -2798,28 +2981,93 @@ public class Anasint extends Parser {
 	}
 
 	public static class OperacionesContext extends ParserRuleContext {
-		public TerminalNode SUMA() { return getToken(Anasint.SUMA, 0); }
-		public Expresion_binariaContext expresion_binaria() {
-			return getRuleContext(Expresion_binariaContext.class,0);
-		}
-		public TerminalNode RESTA() { return getToken(Anasint.RESTA, 0); }
-		public TerminalNode MULT() { return getToken(Anasint.MULT, 0); }
-		public TerminalNode DIV() { return getToken(Anasint.DIV, 0); }
 		public OperacionesContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_operaciones; }
+	 
+		public OperacionesContext() { }
+		public void copyFrom(OperacionesContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class OpRestaContext extends OperacionesContext {
+		public TerminalNode RESTA() { return getToken(Anasint.RESTA, 0); }
+		public Expresion_binariaContext expresion_binaria() {
+			return getRuleContext(Expresion_binariaContext.class,0);
+		}
+		public OpRestaContext(OperacionesContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterOperaciones(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterOpResta(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitOperaciones(this);
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitOpResta(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitOperaciones(this);
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitOpResta(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OpSumaContext extends OperacionesContext {
+		public TerminalNode SUMA() { return getToken(Anasint.SUMA, 0); }
+		public Expresion_binariaContext expresion_binaria() {
+			return getRuleContext(Expresion_binariaContext.class,0);
+		}
+		public OpSumaContext(OperacionesContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterOpSuma(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitOpSuma(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitOpSuma(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OpMultContext extends OperacionesContext {
+		public TerminalNode MULT() { return getToken(Anasint.MULT, 0); }
+		public Expresion_binariaContext expresion_binaria() {
+			return getRuleContext(Expresion_binariaContext.class,0);
+		}
+		public OpMultContext(OperacionesContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterOpMult(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitOpMult(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitOpMult(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class OpDivContext extends OperacionesContext {
+		public TerminalNode DIV() { return getToken(Anasint.DIV, 0); }
+		public Expresion_binariaContext expresion_binaria() {
+			return getRuleContext(Expresion_binariaContext.class,0);
+		}
+		public OpDivContext(OperacionesContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).enterOpDiv(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof AnasintListener ) ((AnasintListener)listener).exitOpDiv(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof AnasintVisitor ) return ((AnasintVisitor<? extends T>)visitor).visitOpDiv(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -2832,6 +3080,7 @@ public class Anasint extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case SUMA:
+				_localctx = new OpSumaContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(393);
@@ -2843,6 +3092,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case RESTA:
+				_localctx = new OpRestaContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(395);
@@ -2854,6 +3104,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case MULT:
+				_localctx = new OpMultContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(397);
@@ -2865,6 +3116,7 @@ public class Anasint extends Parser {
 				}
 				break;
 			case DIV:
+				_localctx = new OpDivContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(399);

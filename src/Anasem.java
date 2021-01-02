@@ -122,7 +122,6 @@ public class Anasem extends AnasintBaseVisitor<Object> {
         return null;
     }
 
-    @Override
     //expresion_binaria: NUMERO
     //    | VAR
     //    | NUMERO (operaciones)?
@@ -235,8 +234,6 @@ public class Anasem extends AnasintBaseVisitor<Object> {
     }
 
 
-
-    @Override
     //expresion_logica: T
     //    | F
     //    | VAR

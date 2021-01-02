@@ -1,14 +1,13 @@
 PROGRAMA
 
 VARIABLES
-    j: NUM;
+    j,h: NUM;
     m: LOG;
+    p: SEQ(NUM);
 SUBPROGRAMAS
 FUNCION mayor(SEQ(NUM) s) dev (NUM i, NUM max)
 VARIABLES
-j:NUM;
-i,max,min:NUM;
-s:SEQ(NUM);
+min:NUM;
 r,j:SEQ(LOG);
 
 INSTRUCCIONES

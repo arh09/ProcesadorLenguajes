@@ -65,22 +65,22 @@ asignacion_simple: asignacion_binaria | asignacion_logica | asignacion_secuencia
 
 asignacion_binaria: VAR IGUAL expresion_binaria PyC;
 
-expresion_binaria: NUMERO
-    | VAR
-    | NUMERO (operaciones)*
-    | VAR (operaciones)*
-    | PARENTESIS_ABIERTO expresion_binaria PARENTESIS_CERRADO
-    | nombre_llamada_funcion
+expresion_binaria: NUMERO #BinNum
+    | VAR   #BinVar
+    | NUMERO (operaciones)* #BinNumOp
+    | VAR (operaciones)*    #BinVarOp
+    | PARENTESIS_ABIERTO expresion_binaria PARENTESIS_CERRADO #BinParent
+    | nombre_llamada_funcion #BinFun
     ;
 
 
 asignacion_logica: VAR IGUAL expresion_logica PyC;
 
-expresion_logica: (NEGACION)?T
-    | (NEGACION)?F
-    | (NEGACION)?VAR
-    | (NEGACION)?nombre_llamada_funcion
-    | (NEGACION)?llamada_a_procedimiento
+expresion_logica: (NEGACION)?T #ExprLogTrue
+    | (NEGACION)?F              #ExprLogFalse
+    | (NEGACION)?VAR               #ExprLogVar
+    | (NEGACION)?nombre_llamada_funcion #ExprLogFun
+    | (NEGACION)?llamada_a_procedimiento    #ExprLogProc
     ;
 
 expresion_secuencia: elemento_secuencia | secuencia_completa ;
@@ -105,10 +105,11 @@ expr5: expresion_binaria COMA expr5 //puede tener operaciones o no
     | expresion_secuencia COMA expr5
     | expresion_secuencia;
 
-operaciones: SUMA (expresion_binaria)
-            |RESTA (expresion_binaria)
-            |MULT (expresion_binaria)
-            |DIV (expresion_binaria);
+operaciones: SUMA (expresion_binaria)   #OpSuma
+            |RESTA (expresion_binaria)  #OpResta
+            |MULT (expresion_binaria)   #OpMult
+            |DIV (expresion_binaria)    #OpDiv
+            ;
 
 //el bloque_opcional sería el SINO , puede que aparezca o no
 condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;

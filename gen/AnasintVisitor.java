@@ -176,11 +176,47 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAsignacion_binaria(Anasint.Asignacion_binariaContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Anasint#expresion_binaria}.
+	 * Visit a parse tree produced by the {@code BinNum}
+	 * labeled alternative in {@link Anasint#expresion_binaria}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpresion_binaria(Anasint.Expresion_binariaContext ctx);
+	T visitBinNum(Anasint.BinNumContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinVar}
+	 * labeled alternative in {@link Anasint#expresion_binaria}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinVar(Anasint.BinVarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinNumOp}
+	 * labeled alternative in {@link Anasint#expresion_binaria}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinNumOp(Anasint.BinNumOpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinVarOp}
+	 * labeled alternative in {@link Anasint#expresion_binaria}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinVarOp(Anasint.BinVarOpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinParent}
+	 * labeled alternative in {@link Anasint#expresion_binaria}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinParent(Anasint.BinParentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code BinFun}
+	 * labeled alternative in {@link Anasint#expresion_binaria}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBinFun(Anasint.BinFunContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#asignacion_logica}.
 	 * @param ctx the parse tree
@@ -188,11 +224,40 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAsignacion_logica(Anasint.Asignacion_logicaContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Anasint#expresion_logica}.
+	 * Visit a parse tree produced by the {@code ExprLogTrue}
+	 * labeled alternative in {@link Anasint#expresion_logica}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpresion_logica(Anasint.Expresion_logicaContext ctx);
+	T visitExprLogTrue(Anasint.ExprLogTrueContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprLogFalse}
+	 * labeled alternative in {@link Anasint#expresion_logica}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprLogFalse(Anasint.ExprLogFalseContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprLogVar}
+	 * labeled alternative in {@link Anasint#expresion_logica}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprLogVar(Anasint.ExprLogVarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprLogFun}
+	 * labeled alternative in {@link Anasint#expresion_logica}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprLogFun(Anasint.ExprLogFunContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ExprLogProc}
+	 * labeled alternative in {@link Anasint#expresion_logica}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprLogProc(Anasint.ExprLogProcContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#expresion_secuencia}.
 	 * @param ctx the parse tree
@@ -242,11 +307,33 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitExpr5(Anasint.Expr5Context ctx);
 	/**
-	 * Visit a parse tree produced by {@link Anasint#operaciones}.
+	 * Visit a parse tree produced by the {@code OpSuma}
+	 * labeled alternative in {@link Anasint#operaciones}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitOperaciones(Anasint.OperacionesContext ctx);
+	T visitOpSuma(Anasint.OpSumaContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code OpResta}
+	 * labeled alternative in {@link Anasint#operaciones}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOpResta(Anasint.OpRestaContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code OpMult}
+	 * labeled alternative in {@link Anasint#operaciones}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOpMult(Anasint.OpMultContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code OpDiv}
+	 * labeled alternative in {@link Anasint#operaciones}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOpDiv(Anasint.OpDivContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#condicional}.
 	 * @param ctx the parse tree
