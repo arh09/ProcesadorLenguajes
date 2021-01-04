@@ -11,8 +11,8 @@ Subprogramas).
 
 GRAMATICA ATRIBUIDA
 -------------------
-almacen_definiciones1(global)-> programa principal
-almacen_definiciones2(global)-> cada subprograma
+almacen_definiciones1(global)-> variables del programa principal
+almacen_definiciones2(global)-> variables de cada subprograma
 boolean main(global)-->  distinguir el inicio de las instrucciones del main
 integers--> lista para distinguir el tipo
 booleans--> lista para distinguir el tipo
