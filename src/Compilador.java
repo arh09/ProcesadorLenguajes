@@ -15,7 +15,6 @@ public class Compilador extends AnasintBaseListener {
     Map<String, Object> almacen_definiciones1 = new HashMap<>();
     Map<String, Object> almacen_definiciones2 = new HashMap<>();
     Boolean main = true;
-    String multiple = "";
 
     List<String> integers = new ArrayList<String>();
     List<String> booleans = new ArrayList<String>();
@@ -406,20 +405,19 @@ public class Compilador extends AnasintBaseListener {
 
     public void exitLlamada_a_procedimiento(Anasint.Llamada_a_procedimientoContext ctx) {
         try {
-            fichero.write( ");\n");
+                fichero.write(");\n");
         } catch (IOException e) {
         }
     }
 
     public void enterLlamada_a_procedimiento(Anasint.Llamada_a_procedimientoContext ctx) {
         String nombre = ctx.getText();
-        String nombre2 = reemplazar(nombre, "mostrar", "System.out.println");
         try {
             gencode_espacios();
             if(nombre.contains("mostrar")) {
                 fichero.write("System.out.println(");
             }else{
-                fichero.write(ctx.getText()+"\n");
+                fichero.write(ctx.expresionF().getText()+"(");
             }
         } catch (IOException e) {
         }
@@ -471,8 +469,6 @@ public class Compilador extends AnasintBaseListener {
             if(ctx.children.contains(ctx.sec_binaria())) {
                 fichero.write("new Integer[]{");
             }else if(ctx.children.contains(ctx.sec_logica())){
-                fichero.write("new Boolean[]{");
-            }else{
                 fichero.write("new Boolean[]{");
             }
         } catch (IOException e) {
@@ -565,52 +561,28 @@ public class Compilador extends AnasintBaseListener {
 
     public void enterBinNumOp(Anasint.BinNumOpContext ctx){
         try {
-            if(ctx.getText().contains("F")){
-                fichero.write("False");
-            }else if(ctx.getText().contains("T")){
-                fichero.write("True");
-            }else {
                 fichero.write(ctx.NUMERO().getText());
-            }
         } catch (IOException e) {
         }
     }
 
     public void enterBinVarOp(Anasint.BinVarOpContext ctx){
         try {
-            if(ctx.getText().contains("F")){
-                fichero.write("False");
-            }else if(ctx.getText().contains("T")){
-                fichero.write("True");
-            }else {
                 fichero.write(ctx.VAR().getText());
-            }
         } catch (IOException e) {
         }
     }
 
     public void enterBinParent(Anasint.BinParentContext ctx){
         try {
-            if(ctx.getText().contains("F")){
-                fichero.write("False");
-            }else if(ctx.getText().contains("T")){
-                fichero.write("True");
-            }else {
                 fichero.write("(");
-            }
         } catch (IOException e) {
         }
     }
 
     public void exitBinParent(Anasint.BinParentContext ctx){
         try {
-            if(ctx.getText().contains("F")){
-                fichero.write("False");
-            }else if(ctx.getText().contains("T")){
-                fichero.write("True");
-            }else {
                 fichero.write(")");
-            }
         } catch (IOException e) {
         }
     }
