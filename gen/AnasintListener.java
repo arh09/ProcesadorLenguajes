@@ -457,25 +457,53 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitSecuencia_completa(Anasint.Secuencia_completaContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#sec_binaria}.
+	 * Enter a parse tree produced by the {@code SecBin}
+	 * labeled alternative in {@link Anasint#sec_binaria}.
 	 * @param ctx the parse tree
 	 */
-	void enterSec_binaria(Anasint.Sec_binariaContext ctx);
+	void enterSecBin(Anasint.SecBinContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#sec_binaria}.
+	 * Exit a parse tree produced by the {@code SecBin}
+	 * labeled alternative in {@link Anasint#sec_binaria}.
 	 * @param ctx the parse tree
 	 */
-	void exitSec_binaria(Anasint.Sec_binariaContext ctx);
+	void exitSecBin(Anasint.SecBinContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link Anasint#sec_logica}.
+	 * Enter a parse tree produced by the {@code SecBin2}
+	 * labeled alternative in {@link Anasint#sec_binaria}.
 	 * @param ctx the parse tree
 	 */
-	void enterSec_logica(Anasint.Sec_logicaContext ctx);
+	void enterSecBin2(Anasint.SecBin2Context ctx);
 	/**
-	 * Exit a parse tree produced by {@link Anasint#sec_logica}.
+	 * Exit a parse tree produced by the {@code SecBin2}
+	 * labeled alternative in {@link Anasint#sec_binaria}.
 	 * @param ctx the parse tree
 	 */
-	void exitSec_logica(Anasint.Sec_logicaContext ctx);
+	void exitSecBin2(Anasint.SecBin2Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SecLog}
+	 * labeled alternative in {@link Anasint#sec_logica}.
+	 * @param ctx the parse tree
+	 */
+	void enterSecLog(Anasint.SecLogContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SecLog}
+	 * labeled alternative in {@link Anasint#sec_logica}.
+	 * @param ctx the parse tree
+	 */
+	void exitSecLog(Anasint.SecLogContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code SecLog2}
+	 * labeled alternative in {@link Anasint#sec_logica}.
+	 * @param ctx the parse tree
+	 */
+	void enterSecLog2(Anasint.SecLog2Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code SecLog2}
+	 * labeled alternative in {@link Anasint#sec_logica}.
+	 * @param ctx the parse tree
+	 */
+	void exitSecLog2(Anasint.SecLog2Context ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#asignacion_secuencia}.
 	 * @param ctx the parse tree

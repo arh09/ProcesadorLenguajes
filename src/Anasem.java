@@ -191,7 +191,6 @@ public class Anasem extends AnasintBaseVisitor<Object> {
         return visit(ctx.getChild(1));
     }
 
-    @Override
     //sec_binaria: (NUMERO| VAR)(operaciones)? COMA sec_binaria
     //        | (NUMERO| VAR)(operaciones)?;
     public Object visitSec_binaria(Anasint.Sec_binariaContext ctx) {

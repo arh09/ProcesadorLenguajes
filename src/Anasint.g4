@@ -88,11 +88,13 @@ expresion_secuencia: elemento_secuencia | secuencia_completa ;
 elemento_secuencia : VAR CORCHETE_ABIERTO expresion_binaria CORCHETE_CERRADO;
 secuencia_completa: CORCHETE_ABIERTO (sec_binaria | sec_logica)? CORCHETE_CERRADO;
 
-sec_binaria: expresion_binaria COMA sec_binaria// 2,5,4,6..
-        | expresion_binaria ;
+sec_binaria: (NUMERO(operaciones)*|VAR(operaciones)*|llamada_a_funcion(operaciones)*|llamada_a_procedimiento) COMA sec_binaria  #SecBin// 2,5,4,6..
+        | (NUMERO(operaciones)*|VAR(operaciones)*|llamada_a_funcion(operaciones)*|llamada_a_procedimiento) #SecBin2
+        ;
 
-sec_logica: expresion_logica COMA sec_logica //T,T,F,F,T...
-        | expresion_logica;
+sec_logica: expresion_logica COMA sec_logica #SecLog //T,T,F,F,T... #SecLog
+        | expresion_logica #SecLog2
+        ;
 
 asignacion_secuencia: VAR IGUAL expresion_secuencia PyC ;
 

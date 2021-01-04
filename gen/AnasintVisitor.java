@@ -277,17 +277,33 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSecuencia_completa(Anasint.Secuencia_completaContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Anasint#sec_binaria}.
+	 * Visit a parse tree produced by the {@code SecBin}
+	 * labeled alternative in {@link Anasint#sec_binaria}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSec_binaria(Anasint.Sec_binariaContext ctx);
+	T visitSecBin(Anasint.SecBinContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link Anasint#sec_logica}.
+	 * Visit a parse tree produced by the {@code SecBin2}
+	 * labeled alternative in {@link Anasint#sec_binaria}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitSec_logica(Anasint.Sec_logicaContext ctx);
+	T visitSecBin2(Anasint.SecBin2Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SecLog}
+	 * labeled alternative in {@link Anasint#sec_logica}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSecLog(Anasint.SecLogContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code SecLog2}
+	 * labeled alternative in {@link Anasint#sec_logica}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSecLog2(Anasint.SecLog2Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#asignacion_secuencia}.
 	 * @param ctx the parse tree

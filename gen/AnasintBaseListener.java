@@ -519,25 +519,49 @@ public class AnasintBaseListener implements AnasintListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSec_binaria(Anasint.Sec_binariaContext ctx) { }
+	@Override public void enterSecBin(Anasint.SecBinContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSec_binaria(Anasint.Sec_binariaContext ctx) { }
+	@Override public void exitSecBin(Anasint.SecBinContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSec_logica(Anasint.Sec_logicaContext ctx) { }
+	@Override public void enterSecBin2(Anasint.SecBin2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitSec_logica(Anasint.Sec_logicaContext ctx) { }
+	@Override public void exitSecBin2(Anasint.SecBin2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSecLog(Anasint.SecLogContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSecLog(Anasint.SecLogContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSecLog2(Anasint.SecLog2Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSecLog2(Anasint.SecLog2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

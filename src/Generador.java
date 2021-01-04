@@ -140,13 +140,21 @@ public class Generador extends AnasintBaseVisitor<String> {
     public String visitFunc(Anasint.FuncContext ctx){
         return visitNombre_Funcion(ctx.nombre_funcion());
     }
+
+    public String visitPredicado(Anasint.PredicadoContext ctx){
+        return ctx.expresionF().getText();
+    }
     public String visitNombre_Funcion(Anasint.Nombre_funcionContext ctx){
         return ctx.expresionF().getText();
     }
 
 
     public String visitFun2(Anasint.FunContext ctx) {
-        return visitFunc2(ctx.func());
+        if(ctx.children.contains(ctx.func())) {
+            return visitFunc2(ctx.func());
+        }else if(ctx.children.contains(ctx.predicado())){
+            return "Boolean";
+        }else{return "";}
     }
     public String visitFunc2(Anasint.FuncContext ctx){
         return visitRetornoFuncion(ctx.retornoFuncion());
@@ -156,7 +164,11 @@ public class Generador extends AnasintBaseVisitor<String> {
     }
 
     public String visitExpr2(Anasint.Expr2Context ctx){
-        return visit(ctx.getChild(0));
+        if(ctx.getText().contains(",")){
+            return "Object[]";
+        }else {
+            return "Integer";
+        }
     }
 
     @Override
@@ -176,4 +188,40 @@ public class Generador extends AnasintBaseVisitor<String> {
         return null;
     }
 
+    public String visitFun3(Anasint.FunContext ctx) {
+        if(ctx.children.contains(ctx.func())) {
+            return visitFunc3(ctx.func());
+        }else{return "";}
+    }
+
+    public String visitFunc3(Anasint.FuncContext ctx) {
+        return visitNombre_Funcion2(ctx.nombre_funcion());
+    }
+
+   public String visitNombre_Funcion2(Anasint.Nombre_funcionContext ctx){
+        return visitExpr22((Anasint.Expr2Context) ctx.expr2(0));
+   }
+   public String visitExpr22(Anasint.Expr2Context ctx){
+        if(ctx.getText().contains(",")){
+            if(ctx.getText().contains("SEQ")){
+                return "Integer[] "+ctx.getChild(1).getText()+",";
+            }else{
+                return  "Integer "+ctx.getChild(1).getText()+",";
+            }
+        }else{
+            if(ctx.getText().contains("SEQ")){
+                return "Integer[] "+ctx.getChild(1).getText();
+            }else{
+                return  "Integer "+ctx.getChild(1).getText();
+            }
+        }
+   }
+
+   public String visitProc(Anasint.ProcContext ctx){
+        return ctx.expresionF().getText();
+   }
+
+    public String visitProc2(Anasint.ProcContext ctx){
+        return ctx.exprProc().getText();
+    }
 }
