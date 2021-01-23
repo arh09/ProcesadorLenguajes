@@ -1,7 +1,6 @@
 PROGRAMA
 
 VARIABLES
-    j,h: NUM;
     m: LOG;
     p: SEQ(NUM);
 SUBPROGRAMAS

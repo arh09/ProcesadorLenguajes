@@ -1,171 +1,192 @@
 Especificación de análisis sintáctico (NIVEL 2)
 
+El programa P se estructura en 3 secciones: una dedicada a la declaración de variables (sección VARIABLES),
+otra dedicada a  la  declaración  de subprogramas (sección SUBPROGRAMAS) y  otra  dedicada al  uso  de variables
+y  subprogramas (sección INSTRUCCIONES).
 
-programa: PROGRAMA VARIABLES(variables)? SUBPROGRAMAS(subprogramas)* INSTRUCCIONES(instrucciones)? EOF;
+    programa: PROGRAMA VARIABLES variables SUBPROGRAMAS subprogramas INSTRUCCIONES instrucciones EOF;
+
+Cada variable declarada en un programa tiene un tipo invariable en dicho programa.
+Ejemplo de declaración de variables:
+
+VARIABLES
+i,max,min:NUM;//i,max y min son variables numéricas y no pueden cambiar su tipo
+                        //a lo largo del programa
+s:SEQ(NUM);//similarmente, s es una secuencia de números
+
+    variables: (VAR (COMA VAR)* DOS_PUNTOS tipo PyC)*;
+
+Los tipos de datos considerados en P son dos clases (1) tipos elementales:
+tipo entero (NUM) y tipo lógico o booleano(LOG) y (2) tipos  no  elementales:
+tipo secuencia entera(SEQ(NUM)) y tipo secuencia lógica(SEQ(LOG)).
+
+    tipo: elemental | no_elemental;
+        elemental: NUM | LOG ;
+        no_elemental: SEQ_NUM | SEQ_LOG;
+
+Los subprogramas se pueden dividir en funciones y procedimientos.
+
+    subprogramas:(funcion | procedimiento)*;
 
 Dentro de los subprogramas puede haber una declaración de variables
-y un bloque de instrucciones. Los subprogramas se pueden dividir en funciones y procedimientos.
-subprogramas: subprograma (variables)? instrucciones (retorno)? (FFUNCION|FPROCEDIMIENTO);
+y un bloque de instrucciones.
 
+    funcion:FUNCION fun VARIABLES variables INSTRUCCIONES instrucciones FFUNCION;
+    procedimiento: PROCEDIMIENTO proc VARIABLES variables INSTRUCCIONES instrucciones FPROCEDIMIENTO;
 
-El lenguaje tendrá variables que podrán ser declaradas de forma única o múltiple indicando el tipo después de las variables, el fin de las variables y el inicio del tipo es  indicado por los dos puntos y se acaba la sentencia con el punto y coma. Las variables creadas no tienen asignado ningún valor.
+Llamaremos predicado a la función que devuelve un valor lógico.
 
+    fun: predicado | func;
+        func: nombre_funcion  retornoFuncion;
 
-variables: (vars)+;
+    predicado: expresionF PARENTESIS_ABIERTO params PARENTESIS_CERRADO
+    DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
 
-vars: VAR (COMA VAR)* DOS_PUNTOS tipo PyC;
+La función tiene un conjunto (posiblemente vacío) de parámetros de entrada
+y un conjunto (no vacío) de parámetros de salida --> params.
 
-Hemos separado en elemental y no elemental los distintos tipos del lenguaje.
-Dentro de elemental estarán los tipos básicos NUM y LOG que son los enteros y valores lógicos respectivamente.
-El otro tipo no elemental son las secuencias de enteros y valores lógicos.
+    nombre_funcion: expresionF PARENTESIS_ABIERTO params PARENTESIS_CERRADO;
+        expresionF: VAR (BB (VAR|NUMERO))*;
 
-tipo: elemental | no_elemental;
+Definimos los nombres de los subprogramas como combinaciones de nombres de variables,
+barrabajas y números --> ExpresionF.
 
-elemental: NUM | LOG ;
+    retornoFuncion: DEV PARENTESIS_ABIERTO params PARENTESIS_CERRADO;
 
-no_elemental: SEQ PARENTESIS_ABIERTO (NUM | LOG) PARENTESIS_CERRADO;
-
-El programa puede tener funciones y/o procedimientos , a continuación en sus llamadas se explica que hace cada uno.
-subprograma: funcion | procedimiento;
-
-Aquí llamamos a “fun” , que puede ser una función o un predicado
-funcion:FUNCION (fun)+ VARIABLES(variables)? INSTRUCCIONES(instrucciones)* FFUNCION;
-
-La función tiene un conjunto vacío de parámetros de entradas , y un conjunto no vacío de salida.
-Un predicado puede recibir parámetros de entrada ,esto devolverá una valor lógico.
-Llamaremos “func” a una función cualquiera que no sea un predicado , para identificarlo con respecto a éste, ya que el predicado devuelve un valor lógico , la “func” devolverá otro valor que no sea lógico
-fun: func | predicado;
-
-nombre_funcion: (MAYOR|MENOR) PARENTESIS_ABIERTO (expr2)* PARENTESIS_CERRADO;
-
-
-//entrada--> secuencia posiblemente vacía , salida--> devuelve parámetros de salida
-func: nombre_funcion  DEV PARENTESIS_ABIERTO (expr2)+ PARENTESIS_CERRADO;
-
-expr_booleana: T |F;
-
-Un predicado puede ser MAYOR_QUE_X o MENOR_QUE_X, siendo X un número , con parámetros de entrada siendo un tipo que no sea lógico , y retorne un tipo lógico.
-
-predicado: (MAYOR_QUE|MENOR_QUE) NUMERO PARENTESIS_ABIERTO (expr2)* PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
-
-expr2: NUM VAR COMA expr2  //(NUM x , NUM y..)
-    | NUM VAR
-    | no_elemental VAR COMA expr2
-    | no_elemental VAR
-    ;
-
-
-procedimiento: PROCEDIMIENTO (proc)+ VARIABLES(variables)? INSTRUCCIONES(instrucciones)? FPROCEDIMIENTO;
-
-Un procedimiento puede tener un conjunto de parámetros de entrada aunque posiblemente sea vacío y no devuelve nada, no hay retorno.
-proc: (MAYOR|MENOR) PARENTESIS_ABIERTO exprProc PARENTESIS_CERRADO;
-
-
-exprProc: no_elemental VAR COMA exprProc
-        | no_elemental VAR
-        | elemental VAR COMA exprProc
+        params: elemental VAR COMA params
         | elemental VAR
-        |;
+        | no_elemental VAR COMA params
+        | no_elemental VAR
+        ;
+El procedimiento tiene  un  conjunto  (posiblemente  vacío)  de  parámetros  de  entrada  y
+salida. No  hay  devolución  explícita  de resultados (no debe usarsela instrucción dev).
 
-En las instrucciones puede haber más de una asignación , condicional, iteración, ruptura, operacion de retorno, llamada a funcion o a procedimiento, mostrar por consola.
+proc: expresionF PARENTESIS_ABIERTO params PARENTESIS_CERRADO (retornoFuncion)?;
 
-Sin aserto ni función de avance (nivel 2)
-instrucciones: ((asignacion)+ | (condicional)+ | (iteracion)+ | (ruptura)+ | (devolucion)+ | (llamada_a_funcion)+ | (llamada_a_procedimiento)+)+;
+P predefine dos funciones para las secuencias(a) un predicado vacia para testar
+si una secuencia es vacía y (b) una función ultima_posicion para devolver la última posición
+de una secuenciano vacía.
+Cualquier expresión numérica puede servir para codificar una posición en una secuencia.
+***************
 
-Las asignaciones pueden ser múltiples o simples.
-Simples →  s=[3,4,2,7];
-múltiples → x,y = 1,x+2;
-función → x = mayor(...);
-procedimiento → mostrar(x);
+Las instrucciones de P son: asignación, condicional, iteración, ruptura de control,
+llamada a procedimiento o función, devolución de resultados de una función y
+mostrar por consola el valor de variables.
+El lenguaje P también dispone de comentarios de línea(//) y de bloque (/* */).
 
+    instrucciones: (asignacion | condicional | iteracion | ruptura
+    | devolucion | llamada_funcion | mostrar)*;
 
-asignacion: asignacion_simple | asignacion_multiple;
+La asignaciónen P puede ser simple o múltiple.
 
-asignacion_simple: asignacion_binaria | asignacion_logica | asignacion_secuencia;
+    asignacion: asignacion_simple | asignacion_multiple;
 
-asignacion_binaria: VAR IGUAL expresion_binaria PyC;
+s =[3,4,2,7,9,0,11]; //asignación simple
+x,y=1,x+2;           //asignación multiple
 
-expresion_binaria: NUMERO
-    | VAR
-    | NUMERO (operaciones)?
-    | VAR (operaciones)?
-    ;
+    asignacion_simple: VAR IGUAL expresion PyC;
+    asignacion_multiple: VAR COMA VAR (COMA VAR)* IGUAL
+        (llamada_funcion | expresion COMA expresion (COMA expresion)*) PyC;
 
-asignacion_logica: VAR IGUAL expresion_logica PyC;
+        expresion: expr_binaria
+            | expr_logica
+            | expr_secuencia
+            ;
 
-expresion_logica: T
-    | F
-    | VAR
-    ;
+           expr_binaria: NUMERO (operaciones)*
+               | VAR (operaciones)*
+               | elemento_secuencia (operaciones)*
+               | PARENTESIS_ABIERTO expresion_binaria PARENTESIS_CERRADO (operaciones)*
+               | ultima_posicion (operaciones)*
+               | llamada_funcion (operaciones)*
+               ;
 
-expresion_secuencia: elemento_secuencia | secuencia_completa ;
+               operaciones: SUMA (expr_binaria)
+                           |RESTA (expr_binaria)
+                           |MULT (expr_binaria)
+                           |DIV (expr_binaria)
+                           ;
 
-elemento_secuencia : VAR CORCHETE_ABIERTO (VAR | NUMERO)(operaciones)? CORCHETE_CERRADO;
-secuencia_completa: CORCHETE_ABIERTO (sec_binaria | sec_logica) CORCHETE_CERRADO;
+               elemento_secuencia: VAR CORCHETE_ABIERTO expr_binaria CORCHETE_CERRADO;
 
-sec_binaria: (NUMERO| VAR)(operaciones)? COMA sec_binaria// 2,5,4,6..
-        | (NUMERO| VAR)(operaciones)?;
+               ultima_posicion: ULTIMAPOSICION PARENTESIS_ABIERTO VAR PARENTESIS_ABIERTO;
 
-sec_logica: expresion_logica COMA sec_logica //T,T,F,F,T...
-        | expresion_logica;
+               llamada_funcion: expresionF PARENTESIS_ABIERTO params PARENTESIS_ABIERTO;
 
-asignacion_secuencia: VAR IGUAL expresion_secuencia PyC ;
+           expr_logica: T
+                    | F
+                    | VAR
+                    | llamada_funcion
+                    | elemento_secuencia
+                    ;
 
+           expr_secuencia: CORCHETE_ABIERTO
+                        (expr_binaria(COMA expr_binaria)* | expr_logica(COMA expr_logica)*)?
+                        CORCHETE_CERRADO;
 
-asignacion_multiple: VAR (COMA VAR)+ IGUAL (expr5)+ PyC;
+La instrucción condicional en P define un bloque de instrucciones cuya ejecución
+depende del valor de verdad de una condición.
+Por ejemplo,
+si(s[i]>max) entonces  //condicion
+max=s[i];            //bloque
+fsi
 
-expr5: expresion_binaria COMA expr5 //puede tener operaciones o no
-    | expresion_binaria
-    | expresion_logica COMA expr5
-    | expresion_logica
-    | expresion_secuencia COMA expr5
-    | expresion_secuencia;
+La instrucción condicional puede incluir una alternativa sino.
+Por ejemplo,
+si(s[i]>max) entonces  //condicion
+max=s[i];            //bloque si se cumple la condicion
+sino
+max=0;               //bloque si no se cumple la condicion
+fsi
 
-operaciones: SUMA (VAR|NUMERO)
-            |RESTA (VAR|NUMERO)
-            |MULT (VAR|NUMERO)
-            |DIV (VAR|NUMERO);
+        condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;
 
-el bloque_opcional sería el SINO , puede que aparezca o no
-condicional:(condicional_si)+;
+Las condicionesen P se construyen en base a igualdades(==) y desigualdades (!=,<,>,<=,>=)
+de expresiones del mismo tipo.
+Las  condiciones  se  pueden  concatenar  con  operadores conjunción (&&) y disyunción  (||).
+También se puede usar la negación (!).
+P incluye dos condiciones especiales: cierto que siempre evalúa a verdadero y
+falso que siempre evalúa a falso.
 
-Aquí declaramos los IF , el cual tiene una condicion , y después un bloque que le sigue y un retorno booleano si es que lo hay , además un bloque opcional que sería el ELSE al cual llamamos “sino”
-condicional_si:SI condicion ENTONCES (instrucciones)* (bloque_opcional)? FSI;
+    condicion: PARENTESIS_ABIERTO (expresion | CIERTO | FALSO)
+            (desigualdades (expresion | CIERTO | FALSO))?
+            (operador_logico)* PARENTESIS_CERRADO;
 
+        desigualdades: IGUALDAD | MAYORQ | MENORQ | MAY | MEN | DISTINTO;
 
-condicion: PARENTESIS_ABIERTO cond1 cond2 (VAR|nombre_llamada_funcion|NUMERO) (concatena_operador_logico)* PARENTESIS_CERRADO;
+        operador_logico: (AND|OR) (expresion | CIERTO | FALSO)
+                (desigualdades (expresion | CIERTO | FALSO))?;
 
-en caso de que haya un && o ||
-concatena_operador_logico: (AND|OR) cond1 cond2 (VAR|nombre_llamada_funcion|NUMERO);
+    bloque_opcional: SINO instrucciones;
 
-p.e s[i] o s o s[i+1]
-cond1: VAR CORCHETE_ABIERTO (VAR|NUMERO) (operaciones)? CORCHETE_CERRADO
-     |VAR
-     |NUMERO;
+La iteración en P define un bloque de instrucciones con una condición al principio.
+La ejecución del bloque se repite hasta que la condición sea falsa.
+Por ejemplo,
+i=0;
+max=s[i];
+mientras(i<=ultima_posicion(s)) hacer
+si(s[i]>max) entonces
+max=s[i];
+fsi
+i=i+1;
+fmientras
 
-s<2 , s==2 , s>=2 , s<=2 , s!=2
-cond2: IGUALDAD | desigualdades ;
+    iteracion: MIENTRAS condicion HACER instrucciones FMIENTRAS;
 
-desigualdades: MAYORQ | MENORQ | MAY | MEN | DISTINTO;
+P dispone de una instrucción de ruptura de control llamada ruptura.
 
-el bloque de “sino” (else) , donde dentro hay un bloque y puede haber también un retorno lógico y una ruptura(break) opcional.
-bloque_opcional: SINO (bloque)* (DEV expr_booleana)? (ruptura)?;
+    ruptura: RUPTURA PyC;
+**************
+    devolucion: DEV expresion PyC;
 
-Aquí declaramos el while(iteración) , que tiene bloques , puede tener break , dentro de ellos puede haber ifs(condicional)
+P dispone de un procedimiento predefinido llamado mostrar para mostrar por consola
+los valores de una lista de variables.
 
-iteracion: MIENTRAS condicion HACER (instrucciones)* FMIENTRAS;
+    mostrar: MOSTRAR PARENTESIS_ABIERTO VAR PARENTESIS_CERRADO PyC;
 
-Ruptura es el break
-ruptura: RUPTURA PyC;
+La declaración de subprogramas en P permite hacer llamadas a los mismos en la zona
+de instrucciones.En el siguiente ejemplo se muestra una llamada a función:
+x,y = mayor(s);//llamada a funcion
 
-lo usamos para asignar una función a una variable
-llamada_a_funcion: (expr5)+ IGUAL nombre_llamada_funcion PyC;
-
-nombre_llamada_funcion: (MAYOR|MENOR|ULTIMAPOSICION|VACIA) PARENTESIS_ABIERTO (VAR|NUMERO) PARENTESIS_CERRADO;
-
-la llamada a un procedimiento MOSTRAR que puede estar en el bloquue también de VARIABLES para mostrar por ejemplo una secuencia , también puede estar en bloques de if y whiles.
-llamada_a_procedimiento: MOSTRAR PARENTESIS_ABIERTO (expr5) PARENTESIS_CERRADO PyC ;
-
-
-En caso de que sea una función devuelve por ejemplo un dev i,j;
-devolucion: DEV (NUMERO | expresion_logica)(COMA (NUMERO | expresion_logica))* PyC;
+    asignacion_multiple: VAR COMA VAR (COMA VAR)* IGUAL
+        (llamada_funcion | expresion COMA expresion (COMA expresion)*) PyC;

@@ -7,13 +7,14 @@ FIN_LINEA: '\r'?'\n' ->skip;
 fragment DIGITO: [0-9];
 fragment LETRA:[a-zA-Z];
 NUMERO:('-')?(DIGITO)+;
+
+
 VARIABLES:'VARIABLES';
 FUNCION:'FUNCION';
 PROCEDIMIENTO:'PROCEDIMIENTO';
 INSTRUCCIONES:'INSTRUCCIONES';
 PROGRAMA:'PROGRAMA';
 SUBPROGRAMAS:'SUBPROGRAMAS';
-
 DOS_PUNTOS: ':';
 PARENTESIS_ABIERTO : '(';
 PARENTESIS_CERRADO : ')';
@@ -48,21 +49,24 @@ MIENTRAS:'mientras';
 HACER:'hacer';
 FMIENTRAS:'fmientras';
 RUPTURA:'ruptura';
+
 //MAYOR:'mayor';
 //MENOR:'menor';
 //MAYOR_QUE:'mayor_que_'(DIGITO|LETRA)*;
 //MENOR_QUE:'menor_que_'(DIGITO|LETRA)*;
-//VACIA: 'vacia';
-//MOSTRAR:'mostrar';
-//ULTIMAPOSICION: 'ultima_posicion';
+VACIA: 'vacia';
+ULTIMAPOSICION: 'ultima_posicion';
 FFUNCION:'FFUNCION';
 FPROCEDIMIENTO:'FPROCEDIMIENTO';
 T:'T';
 F:'F';
 SEQ_NUM:'SEQ(NUM)';
 SEQ_LOG:'SEQ(LOG)';
-
+CIERTO: 'cierto';
+FALSO: 'falso';
+MOSTRAR:'mostrar';
 VAR: LETRA(LETRA|DIGITO)*;
+
 
 
 COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip ;
