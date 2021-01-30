@@ -50,10 +50,7 @@ HACER:'hacer';
 FMIENTRAS:'fmientras';
 RUPTURA:'ruptura';
 
-//MAYOR:'mayor';
-//MENOR:'menor';
-//MAYOR_QUE:'mayor_que_'(DIGITO|LETRA)*;
-//MENOR_QUE:'menor_que_'(DIGITO|LETRA)*;
+
 VACIA: 'vacia';
 ULTIMAPOSICION: 'ultima_posicion';
 FFUNCION:'FFUNCION';
@@ -65,6 +62,7 @@ SEQ_LOG:'SEQ(LOG)';
 CIERTO: 'cierto';
 FALSO: 'falso';
 MOSTRAR:'mostrar';
+
 VAR: LETRA(LETRA|DIGITO)*;
 
 

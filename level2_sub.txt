@@ -1,0 +1,37 @@
+PROGRAMA
+VARIABLES
+   a,b:LOG;
+   i,j:NUM;
+   s:SEQ(NUM);
+   t:SEQ(LOG);
+SUBPROGRAMAS
+
+   FUNCION f(NUM var, NUM val) dev (LOG r)
+      VARIABLES
+      INSTRUCCIONES
+         var=val;
+         val=0;
+         b=T;
+         r=T;
+         dev r;
+   FFUNCION
+
+   PROCEDIMIENTO p(NUM var, NUM val)
+      VARIABLES
+      INSTRUCCIONES
+         var = val;
+         val = 8;
+         b = F;
+   FPROCEDIMIENTO
+
+INSTRUCCIONES
+   j=10;
+   i=2;
+   p(i,i+j);
+   mostrar(i); mostrar(j);mostrar(b);
+   //mostrar(j,b);
+
+   i=2;
+   a=f(i,i+j);
+   mostrar(i); mostrar(j);mostrar(b);
+   //mostrar(j,b);

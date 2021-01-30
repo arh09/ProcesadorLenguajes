@@ -1,4 +1,4 @@
-// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\Analex.g4 by ANTLR 4.8
+// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\AnalizadorLexicoEspecificacion.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.Token;

@@ -1,0 +1,21 @@
+PROGRAMA
+VARIABLES
+   i:NUM;
+   a,b,c,d:LOG;
+   s:SEQ(LOG);
+SUBPROGRAMAS
+   FUNCION f() dev (LOG r)
+   VARIABLES
+   INSTRUCCIONES
+      dev T;
+   FFUNCION
+INSTRUCCIONES
+   a=T;
+   mostrar(a);
+   s,i=[a,F,T],0;
+   //mostrar(s,i);
+   mostrar(s); mostrar(i);
+   a,b,c=s[i],s[i+1],s[2];
+   mostrar(a,b,c);
+   s=[f(),f(),f()];
+   mostrar(s);

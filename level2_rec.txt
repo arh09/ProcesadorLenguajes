@@ -1,0 +1,25 @@
+PROGRAMA
+VARIABLES
+   a,b:LOG;
+   i,j:NUM;
+   s:SEQ(NUM);
+   t:SEQ(LOG);
+SUBPROGRAMAS
+
+   FUNCION f(SEQ(NUM) s, NUM i) dev (NUM r)
+   VARIABLES
+   INSTRUCCIONES
+      //mostrar(s,i);
+      mostrar(s);mostrar(i);
+      si (i==ultima_posicion(s)) entonces
+         r=s[i];
+      sino
+         r=s[i]+f(s,i+1);
+      fsi
+      dev r;
+   FFUNCION
+
+INSTRUCCIONES
+   s=[-1,3,5];
+   j=f(s,0);
+   mostrar(j);

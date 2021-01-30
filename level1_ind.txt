@@ -1,0 +1,13 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   i=3;
+   si (i!=j && i!=6) entonces
+      p=1;
+   sino
+      p=5;
+   fsi
+   mostrar(p);

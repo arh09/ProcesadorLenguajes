@@ -1,0 +1,170 @@
+Introducción:
+Cada variable declarada en un programa tiene un tipo invariable en dicho programa.
+Las variables NUM almacenan valores enteros, las variables LOG valores lógicos y
+las variables SEQ(NUM)/SEQ(LOG) almacenan secuencias de enteros/secuencias de valores lógicos.
+P predefine las siguientes operaciones para el tipo NUM:suma (+), resta (-) y multiplicación (*).
+Se considera por defecto que * es más prioritario que + y – y estos dos últimos operadores
+tienen la misma prioridadentre sí.
+P no predefine ninguna operación para el tipo LOG.
+
+En este analizador haremos uso del "Visitor" implementado en Antlr4.
+
+Gramática , diseño y objetivos de éste Analizador Semántico:
+
+Objetivos:
+
+1) Lo principal será saber que variables existen y cuáles están disponibles en cada momento.
+Para ello haremos uso de dos almacénes de variables, uno para el programa principal y otro
+para cada subprograma que se defina, en los cuales definiremos el nombre de cada variable
+con su tipo asignado, y lo utilizaremos más adelante para comprobar el tipado de las instrucciones.
+Para confirmar que se entra en la sección de subprogramas haremos uso de una variable booleana llamada 'subprog'.
+En el caso de encontrarnos con una variable no declarada, nos saltará un mensaje de error.
+Para ello suponemos que las instrucciones de los subprogramas pueden acceder tanto a las variables
+del programa principal(por ejemplo en procedimientos sin parámetros de entrada) como a las definidas para tal
+subprograma y que las instrucciones del programa principal pueden acceder sólo a las variables del programa principal.
+
+2) Lo siguiente será comprobar que las instrucciones están bien tipadas.
+ instrucciones: (asignacion | condicional | iteracion | ruptura | devolucion | llamada_procedimiento | mostrar)*;
+-Asignaciones: para las asignaciones simples tendremos que comprobar que tanto la parte izquierda
+como la parte derecha son del mismo tipo.    //asignacion_simple: expr IGUAL expresion PyC;
+Para la parte izquierda podremos hacer uso de variables, las cuales tienen definido su tipo en el almacén,
+o de elementos de secuencia, los cuales serán tipo NUM o LOG según su tipo de secuencia (SEQ_NUM o SEQ_LOG).
+Para la parte derecha analizamos el tipo de una expresion. Si es VAR o un elemento de una secuencia seguimos
+las mismas pautas de antes. Una llamada a función será del mismo tipo que sus parámetros de salida. ******
+Una expresión binaria, debe ser tipo NUM. Una empresión lógica tipo LOG. Y una expresión secuencia debe ser
+tipo SEQ_NUM, SEQ_LOG o SEQ, según las expresiones que lleve dentro. Si todas son NUM, SEQ_NUM;
+si todas son LOG,SEQ_LOG; si está vacía será SEQ. En cualquier otro caso será indefinida (null).
+//expresion: VAR
+//            | llamada_funcion
+//            | expr_binaria
+//            | expr_logica
+//            | expr_secuencia
+//            | elemento_secuencia
+//            ;
+-Condicional:  //condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;
+-Iteración:  //iteracion: MIENTRAS condicion HACER instrucciones FMIENTRAS;
+
+// condicion: PARENTESIS_ABIERTO (expresion | CIERTO | FALSO)
+//              (desigualdades (expresion | CIERTO | FALSO))?
+//              (operador_logico)* PARENTESIS_CERRADO;
+
+Tanto para la iteración como para el condicional haremos la comprobación del tipado de sus condiciones.
+Comprobaremos que la expresión 1 es del mismo tipo que la expresión 2. Y que ambas sean de tipo numérico.
+E igualmente, con el operador lógico:
+
+//operador_logico: (AND|OR) (NEGACION)?(expresion | CIERTO | FALSO)
+//          (desigualdades (NEGACION)?(expresion | CIERTO | FALSO))?;
+
+-La devolución estará bien tipada si la expresion es del mismo tipo que el parámetro de salida de la función.
+
+Haremos uso de las siguientes variables globales:
+
+    private Map<String,Integer> variablesProg = new HashMap<>(); //variables del prog principal, nombre y tipo
+    private Map<String,Integer> variablesSubProg = new HashMap<>(); //variables de cada subprograma, nombre y tipo
+    private boolean subprog = false; // será true siempre que se encuentre en el bloque SUBPROGRAMAS
+    private Map<String,List<Integer>> parametrosEntrada = new HashMap<>(); // parametros de entrada de funciones definidas
+    private Map<String,List<Integer>> parametrosSalida = new HashMap<>(); // parametros de salida de funciones definidas
+    private String funcion = null; // nombre de la función en la que nos ubicamos contextualmente
+
+GRAMATICA ATRIBUIDA:
+--------------------
+
+programa: PROGRAMA VARIABLES variables* SUBPROGRAMAS subprogramas INSTRUCCIONES instrucciones EOF;
+
+variables: vars DOS_PUNTOS tipo PyC;
+
+vars: VAR (COMA VAR)* ;
+
+tipo: elemental | no_elemental;
+
+elemental: NUM | LOG ;
+
+no_elemental: SEQ_NUM | SEQ_LOG;
+
+subprogramas:(funcion | procedimiento)*;
+
+funcion:FUNCION fun VARIABLES variables* INSTRUCCIONES instrucciones FFUNCION;
+
+fun: predicado | func;
+
+predicado: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
+
+expresionF: VAR (BB (VAR|NUMERO))*;
+
+func: nombre_funcion  retornoFuncion;
+
+nombre_funcion: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO;
+
+retornoFuncion: DEV PARENTESIS_ABIERTO params PARENTESIS_CERRADO;
+
+params: tipo VAR COMA params
+         | tipo VAR
+         ;
+
+procedimiento: PROCEDIMIENTO proc VARIABLES variables* INSTRUCCIONES instrucciones FPROCEDIMIENTO;
+
+proc: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO (retornoFuncion)?;
+
+instrucciones: (asignacion | condicional | iteracion | ruptura | devolucion | llamada_procedimiento | mostrar)*;
+
+llamada_procedimiento: llamada_funcion PyC;
+
+asignacion: asignacion_simple | asignacion_multiple;
+
+asignacion_simple: expr IGUAL expresion PyC;
+
+expr: VAR| elemento_secuencia;
+
+asignacion_multiple: expr COMA expr (COMA expr)*
+            IGUAL expresion (COMA expresion)* PyC;
+
+expresion: VAR
+            | llamada_funcion
+            | expr_binaria
+            | expr_logica
+            | expr_secuencia
+            | elemento_secuencia
+            ;
+
+expr_binaria: NUMERO (operaciones)?
+               | VAR (operaciones)?
+               | elemento_secuencia (operaciones)?
+               | PARENTESIS_ABIERTO expr_binaria PARENTESIS_CERRADO (operaciones)?
+               | llamada_funcion (operaciones)?
+               ;
+
+operaciones: (SUMA|RESTA|MULT) expresion;
+
+elemento_secuencia: VAR CORCHETE_ABIERTO expresion CORCHETE_CERRADO;
+
+llamada_funcion: (expresionF| VACIA | ULTIMAPOSICION) PARENTESIS_ABIERTO (expresion (COMA expresion)*)? PARENTESIS_CERRADO;
+
+expr_logica: T
+    | F
+    | elemento_secuencia
+    ;
+
+expr_secuencia: CORCHETE_ABIERTO
+        (expresion(COMA expresion)*)?
+        CORCHETE_CERRADO;
+
+condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;
+
+ condicion: PARENTESIS_ABIERTO (NEGACION)?(expresion | CIERTO | FALSO)
+            (desigualdades (NEGACION)?(expresion | CIERTO | FALSO))?
+            (operador_logico)* PARENTESIS_CERRADO;
+
+desigualdades: IGUALDAD | MAYORQ | MENORQ | MAY | MEN | DISTINTO;
+
+operador_logico: (AND|OR) (NEGACION PARENTESIS_ABIERTO)?(expresion | CIERTO | FALSO)
+        (desigualdades (NEGACION)?(expresion | CIERTO | FALSO))? (PARENTESIS_CERRADO)?;
+
+bloque_opcional: SINO instrucciones;
+
+iteracion: MIENTRAS condicion HACER instrucciones FMIENTRAS;
+
+ruptura: RUPTURA PyC;
+
+devolucion: DEV expresion (COMA expresion)* PyC;
+
+mostrar: MOSTRAR PARENTESIS_ABIERTO (VAR|elemento_secuencia) (COMA (VAR|elemento_secuencia))* PARENTESIS_CERRADO PyC;

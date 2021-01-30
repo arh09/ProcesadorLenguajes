@@ -1,0 +1,27 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   i=3;
+   j=4;
+   s=[1,1];
+   si (i!=j && !(i==6) || s[1]==1) entonces
+      si (j==4) entonces
+         p=1;
+         e=7;
+      sino
+         p=2;
+      fsi
+   sino
+      si (i==6) entonces
+         p=3;
+      sino
+         p=4;
+      fsi
+   fsi
+   e=8;
+   //mostrar(p,e);
+   mostrar(p);
+   vacia(b);

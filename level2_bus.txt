@@ -1,0 +1,25 @@
+PROGRAMA
+VARIABLES
+   i,e,p:NUM;
+   j:LOG;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+   FUNCION inicializar() dev (SEQ(NUM) a,NUM b,LOG c,NUM d)
+   VARIABLES
+   INSTRUCCIONES
+      dev [9,3,5,2,-1,0,-3],0,F,-1;
+   FFUNCION
+INSTRUCCIONES
+   s,i,j,e=inicializar();
+   //s,i,j,e=[9,3,5,2,-1,0,-3],0,F,-1;
+   //mostrar(s,i,j,e);
+   mostrar(s);mostrar(i);mostrar(j);mostrar(e);
+   mientras (i<=ultima_posicion(s) && j==F) hacer
+      si (s[i]==e) entonces
+         j,p=T,i;
+      sino
+         i=i+1;
+      fsi
+   fmientras
+   //mostrar(s,i,j,e,p);
+   mostrar(s);mostrar(i);mostrar(j);mostrar(e);mostrar(p);

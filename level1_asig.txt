@@ -1,0 +1,12 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s,t:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   s,t=[-2,8,7],[1,3,4];
+   mostrar(s); mostrar(t);
+   //mostrar(s,t);
+   s,t=t,s;
+   //mostrar(s,t);
+   mostrar(s); mostrar(t);

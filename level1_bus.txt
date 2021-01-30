@@ -1,0 +1,16 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   s,i,j,e=[9,3,5,2,-1,0,-3],0,0,-1;
+   mientras (i<=ultima_posicion(s) && j==0) hacer
+      si (s[i]==e) entonces
+         j,p=1,i;
+      sino
+         i=i+1;
+      fsi
+   fmientras
+   mostrar(s,i,j,e,p);
+    vacia(s);

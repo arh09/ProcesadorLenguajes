@@ -1,0 +1,11 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   s,i=[-2,8,7],0;
+   e=s[i+1]*s[i]-s[2];
+   mostrar(e);
+   s[i+1]=s[i+1]*s[i]-s[2];
+   mostrar(s);

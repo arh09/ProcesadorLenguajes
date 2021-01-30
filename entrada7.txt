@@ -5,14 +5,15 @@ j:LOG;
 s:SEQ(LOG);
 p:SEQ(NUM);
 SUBPROGRAMAS
-FUNCION mayor_que_5(NUM x) dev (LOG r)
+FUNCION mayor_que_5(NUM x) dev (LOG r,NUM t)
 VARIABLES
 INSTRUCCIONES
-si(x>5 && x>3 || x==4)
+si(x>s && x>3 || T==T)
 entonces
 dev T;
 sino
 dev F;
+i=mayor_que_5(7);
 fsi
 FFUNCION
 INSTRUCCIONES

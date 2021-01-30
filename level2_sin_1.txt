@@ -29,4 +29,3 @@ INSTRUCCIONES
    s=[i,siguiente(siguiente(1))];
    t=[a,verdadero(),F];
    t=[];
-   mostrar(a);

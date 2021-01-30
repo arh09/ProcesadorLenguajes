@@ -1,4 +1,4 @@
-// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\AnalizadorSintacticoEspecificacion.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
 /**
@@ -24,6 +24,13 @@ public class AnasintBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitVariables(Anasint.VariablesContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitVars(Anasint.VarsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -135,6 +142,13 @@ public class AnasintBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
+	@Override public T visitLlamada_procedimiento(Anasint.Llamada_procedimientoContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
 	@Override public T visitAsignacion(Anasint.AsignacionContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
@@ -143,6 +157,13 @@ public class AnasintBaseVisitor<T> extends AbstractParseTreeVisitor<T> implement
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitAsignacion_simple(Anasint.Asignacion_simpleContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitExpr(Anasint.ExprContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

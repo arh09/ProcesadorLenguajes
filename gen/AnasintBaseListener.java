@@ -1,4 +1,4 @@
-// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\AnalizadorSintacticoEspecificacion.g4 by ANTLR 4.8
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -34,6 +34,18 @@ public class AnasintBaseListener implements AnasintListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitVariables(Anasint.VariablesContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterVars(Anasint.VarsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitVars(Anasint.VarsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -219,6 +231,18 @@ public class AnasintBaseListener implements AnasintListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterLlamada_procedimiento(Anasint.Llamada_procedimientoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLlamada_procedimiento(Anasint.Llamada_procedimientoContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterAsignacion(Anasint.AsignacionContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -238,6 +262,18 @@ public class AnasintBaseListener implements AnasintListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAsignacion_simple(Anasint.Asignacion_simpleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterExpr(Anasint.ExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitExpr(Anasint.ExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

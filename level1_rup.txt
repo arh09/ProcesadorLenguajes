@@ -1,0 +1,18 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   s,i,j,e=[9,3,5,2,-1,0,-3],0,0,-1;
+   mientras (i<=ultima_posicion(s) && j==0) hacer
+      si (s[i]==e) entonces
+         ruptura;
+         j,p=1,i;
+      fsi
+      i=i+1;
+      //mostrar(i,j);
+      mostrar(i);mostrar(j);
+   fmientras
+   //mostrar(s,i,j,e,p);
+   mostrar(e);mostrar(p);

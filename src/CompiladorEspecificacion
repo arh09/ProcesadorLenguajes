@@ -1,0 +1,191 @@
+OBJETIVO
+--------
+Construir un compilador para el lenguaje P que traduzca a Java
+
+DECISIONES DE DISEÑO
+--------------------
+-Variables globales:
+
+    Boolean maindone = false; // Será true una vez generado el código del principio del main.
+    Boolean main = true; // Será false siempre que se encuentre en el bloque de subprogramas.
+    Map<String, Integer> variablesProg = new HashMap<>(); // Map de nombre y tipo de las variables del prog principal
+    Map<String, Integer> variablesSubProg = new HashMap<>(); // Map de nombre y tipo de cada subprograma.
+
+1)Para traducir de forma correcta definimos el esquema de traducción de un programa P.
+
+programa: PROGRAMA VARIABLES variables*{declara las variables} SUBPROGRAMAS {genera codigo variables prog principal}subprogramas INSTRUCCIONES instrucciones EOF;
+
+//Inicio del programa: en el inicio del programa incluiremos la importación de algunas librerías,
+y el inicio del programa en sí (clase), además de definir las funciones predefinidas del lenguaje P.
+
+import java.io.*;
+import java.util.List;
+
+public class _Programa{                                         ////PROGRAMA
+                                                                    //
+    generar funciones generales: ultima_posicion,vacia,mostrar      //
+                                                                    //
+    generar codigo para declaración de variables globales           //VARIABLES
+                                                                    //
+    generar codigo para la declaración de subprogramas              //SUBPROGRAMAS
+                                                                    //    //
+        -generar codigo para declaración de variables               //    //VARIABLES
+        -generar codigo para cada instrucción                       //      //INSTRUCCIONES
+                                                                    //
+    public static void main(String[] args) {                        //INSTRUCCIONES
+        generar codigo para cada instrucción
+    }
+}
+
+    1.1)Inicio de los subprogramas: lo principal: main = false. Antes de generar el código
+    para los subprogramas, generamos el código de las variables del programa principal
+    una vez que están todas declaras.
+
+    1.2)La declaración de las variables del programa principal serán del tipo public static
+    mientras que las de los subprogramas serán de tipo local y no podrán ser utilizadas
+    desde el main. Las variables estarán almacenadas en el map variablesProg y le daremos
+    un string (Integer,Boolean,Integer[] o Boolean[]) según el tipo de variable que sea
+    cada una. Sus parámetros de entrada serán igual que en P haciendo el cambio de variables (NUM -> Integer), (LOG->Boolean),
+    (SEQ(LOG)-->Boolean[]), (SEQ(NUM)-->Integer[]).
+
+    1.3)El código del subprograma tendrá en su cabecera el tipo de variable que devuelve,
+    haciendo un cambio como en las variables y al generar el código de los subprogramas,
+    le añadimos las variables declaradas en su cabecera como parametros de salida.
+     Volvemos a generar el código de las variables justo al entrar en el siguiente bloque
+     (intrucciones) una vez todas hayan sido declaradas.
+
+    1.4)Al salir del bloque subprogramas y volver al programa principal: main = true.
+
+    1.5)Al entrar en las instrucciones del programa principal(enterInstrucciones,
+    si main==true) generamos el código del inicio del main.
+
+    1.6)Final del programa: cerraremos el main, la clase y el archivo.
+
+2)Aprovecharemos la similitud entre el lenguaje fuente y el lenguaje destino para ahorrar
+bastante trabajo haciendo uso del mismo código de P para Java
+
+    2.1)Las asignaciones y las condiciones (y todas las expresiones contenidas en ellas)
+    son tomadas del lenguaje P y encajan perfectamente en el lenguaje Java.
+    Tomaremos las asignaciones múltiples como varias simples relacionando cada expresión
+    de la izquierda con su correspondiente de la derecha o, en su defecto,
+    todas las de la izquierda con la única de la derecha.
+
+    2.2)En la ruptura cambiaremos la cadena 'ruptura' por 'break' y en las devoluciones,
+    'dev' por 'return'.
+
+GRAMATICA ATRIBUIDA:
+--------------------
+
+programa:{genera codigo del principio de la clase, imports y funciones predefinidas}
+    PROGRAMA VARIABLES variables* SUBPROGRAMAS subprogramas
+    INSTRUCCIONES {genera el código del principio del main, maindone = true}instrucciones EOF
+    {genera codigo de cierre para el main y para la clase};
+
+variables: vars DOS_PUNTOS tipo PyC {si main entonces vars,tipo se añaden a variablesProg, sino a variablesSubProg};
+
+vars: VAR (COMA VAR)* ;
+
+tipo: elemental | no_elemental;
+
+elemental: NUM | LOG ;
+
+no_elemental: SEQ_NUM | SEQ_LOG;
+
+subprogramas:{genera el codigo de las variables del programa principal, main = false}
+    (funcion | procedimiento)*
+    {main = true};
+
+funcion:{genera el código del principio de una función}
+    FUNCION fun VARIABLES variables* INSTRUCCIONES {genera codigo variables subprograma} instrucciones FFUNCION
+    {genera el código del fin de una funcion};;
+
+fun: predicado | func;
+
+predicado: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
+
+expresionF: VAR (BB (VAR|NUMERO))*;
+
+func: nombre_funcion  retornoFuncion;
+
+nombre_funcion: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO;
+
+retornoFuncion: DEV PARENTESIS_ABIERTO params PARENTESIS_CERRADO;
+
+params: tipo VAR COMA params
+         | tipo VAR
+         ;
+
+procedimiento: {genera el código del principio de un procedimiento}
+    PROCEDIMIENTO proc VARIABLES variables* INSTRUCCIONES {genera codigo variables subprograma}instrucciones FPROCEDIMIENTO
+    {genera el código del fin de un procedimiento};
+
+proc: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO (retornoFuncion)?;
+
+instrucciones: (asignacion | condicional | iteracion | ruptura | devolucion | llamada_procedimiento | mostrar)*;
+
+llamada_procedimiento: llamada_funcion PyC {generamos el codigo de la llamada a un procedimiento, "ctx.getText()" };
+
+asignacion: asignacion_simple | asignacion_multiple;
+
+asignacion_simple:{generamos el codigo de las asignaciones simples} expr IGUAL expresion PyC;
+
+expr: VAR| elemento_secuencia;
+
+asignacion_multiple:{generamos el codigo de las asignaciones multiples} expr COMA expr (COMA expr)*
+            IGUAL expresion (COMA expresion)* PyC;
+
+expresion: VAR
+            | llamada_funcion
+            | expr_binaria
+            | expr_logica
+            | expr_secuencia
+            | elemento_secuencia
+            ;
+
+expr_binaria: NUMERO (operaciones)?
+               | VAR (operaciones)?
+               | elemento_secuencia (operaciones)?
+               | PARENTESIS_ABIERTO expr_binaria PARENTESIS_CERRADO (operaciones)?
+               | llamada_funcion (operaciones)?
+               ;
+
+operaciones: (SUMA|RESTA|MULT) expresion;
+
+elemento_secuencia: VAR CORCHETE_ABIERTO expresion CORCHETE_CERRADO;
+
+llamada_funcion: (expresionF| VACIA | ULTIMAPOSICION) PARENTESIS_ABIERTO (expresion (COMA expresion)*)? PARENTESIS_CERRADO;
+
+expr_logica: T
+    | F
+    | elemento_secuencia
+    ;
+
+expr_secuencia: CORCHETE_ABIERTO
+        (expresion(COMA expresion)*)?
+        CORCHETE_CERRADO;
+
+condicional:{generamos el codigo del principio del condicional, "if(condicion){" }
+    SI condicion ENTONCES instrucciones (bloque_opcional)? FSI
+    {cerramos el condicional con una llave "}"};
+
+ condicion: PARENTESIS_ABIERTO (NEGACION)?(expresion | CIERTO | FALSO)
+            (desigualdades (NEGACION)?(expresion | CIERTO | FALSO))?
+            (operador_logico)* PARENTESIS_CERRADO;
+
+desigualdades: IGUALDAD | MAYORQ | MENORQ | MAY | MEN | DISTINTO;
+
+operador_logico: (AND|OR) (NEGACION PARENTESIS_ABIERTO)?(expresion | CIERTO | FALSO)
+        (desigualdades (NEGACION)?(expresion | CIERTO | FALSO))? (PARENTESIS_CERRADO)?;
+
+bloque_opcional: {generar código del bloque opcional, "}else{" }SINO instrucciones;
+
+iteracion: {generamos el codigo del principio de la iteración, "while(condicion){" }
+    MIENTRAS condicion HACER instrucciones FMIENTRAS
+    {cerramos la iteración con una llave "}"};
+
+ruptura: {generar codigo de la ruptura, "break;" }RUPTURA PyC;
+
+devolucion: {generamos el codigo de la devolución, "return (expresion);"} DEV expresion (COMA expresion)* PyC;
+
+mostrar: MOSTRAR PARENTESIS_ABIERTO (VAR|elemento_secuencia) (COMA (VAR|elemento_secuencia))* PARENTESIS_CERRADO PyC
+{generar codigo del procedimiento mostrar, "ctx.getText()" };

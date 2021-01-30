@@ -1,0 +1,43 @@
+PROGRAMA
+VARIABLES
+   a,b:LOG;
+   i,j:NUM;
+   s:SEQ(NUM);
+   t:SEQ(LOG);
+SUBPROGRAMAS
+
+   FUNCION f2(NUM var) dev (LOG r)
+      VARIABLES
+         i:NUM;
+      INSTRUCCIONES
+         i=4;
+         si (i==var) entonces
+            dev F;
+         sino
+            dev T;
+         fsi
+         mostrar(i);
+   FFUNCION
+
+   FUNCION f1(NUM var) dev (LOG r)
+      VARIABLES
+         i:NUM;
+      INSTRUCCIONES
+         i=3;
+         si (var==i) entonces
+            dev T;
+         sino
+            r=f2(var);
+            dev r;
+         fsi
+         mostrar(i);
+   FFUNCION
+
+
+INSTRUCCIONES
+   i=0;
+   a=f1(4);
+   mostrar(a);
+
+   b=f2(2);
+   mostrar(b);

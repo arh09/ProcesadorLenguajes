@@ -1,0 +1,118 @@
+Especificación del Analizador léxico:
+
+BLANCO: ' ' ->skip;
+TABULADOR: '\t'->skip;
+FIN_LINEA: '\r'?'\n' ->skip;
+
+fragment DIGITO: [0-9];
+fragment LETRA:[a-zA-Z];
+
+//Números pueden ser negativos y tener más de un dígito
+NUMERO:('-')?(DIGITO)+;
+
+//Comienzo del bloque de variables
+VARIABLES:'VARIABLES';
+
+//Comienzo de una función
+FUNCION:'FUNCION';
+
+//Comienzo de un procedimiento
+PROCEDIMIENTO:'PROCEDIMIENTO';
+
+//Comienzo de un bloque de instrucciones
+INSTRUCCIONES:'INSTRUCCIONES';
+
+//Comienzo del programa
+PROGRAMA:'PROGRAMA';
+
+//Commienzo del bloque de subprogramas
+SUBPROGRAMAS:'SUBPROGRAMAS';
+
+//Carácteres propios del lenguaje
+DOS_PUNTOS: ':';
+PARENTESIS_ABIERTO : '(';
+PARENTESIS_CERRADO : ')';
+PyC: ';';
+COMA: ',';
+BB: '_';
+CORCHETE_ABIERTO:'[';
+CORCHETE_CERRADO:']';
+
+//Tipos primitivos
+NUM:'NUM';
+LOG:'LOG';
+SEQ:'SEQ';
+
+//Retorno de programa o subprogramas
+DEV:'dev';
+
+//Carácteres propios del lenguaje para la operaciones binarias
+SUMA: '+';
+RESTA: '-';
+MULT: '*';
+
+//Carácter propio de las asignaciones
+IGUAL:'=';
+
+//Inicio y fin de un bloque condicional
+SI:'si';
+FSI:'fsi';
+
+//Desigualdades e igualdad lógicas
+MAYORQ:'>=';
+MENORQ:'<=';
+MAY:'>';
+MEN:'<';
+DISTINTO:'!=';
+IGUALDAD:'==';
+
+//Operaciones lógicas
+AND:'&&';
+OR:'||';
+NEGACION:'!';
+
+// Precesor del bloque de instrucciones de un bloque condicional
+ENTONCES:'entonces';
+
+//Bloque de instrucciones opcional después de un bloque condicional
+SINO:'sino';
+
+//Precesor de un bloque iterativo
+MIENTRAS:'mientras';
+
+// Precesor del bloque de instrucciones de un bloque iterativo
+HACER:'hacer';
+
+//Fin de un bloque iterativo
+FMIENTRAS:'fmientras';
+
+//Similar a un break
+RUPTURA:'ruptura';
+
+//Nombres de subprogramas
+VACIA: 'vacia';
+ULTIMAPOSICION: 'ultima_posicion';
+MOSTRAR:'mostrar';
+
+//Fin de una funcion
+FFUNCION:'FFUNCION';
+
+//Fin de un procedimiento
+FPROCEDIMIENTO:'FPROCEDIMIENTO';
+
+//Valores lógicos
+T:'T';
+F:'F';
+CIERTO: 'cierto';
+FALSO: 'falso';
+
+//Tipos de secuencia
+SEQ_NUM:'SEQ(NUM)';
+SEQ_LOG:'SEQ(LOG)';
+
+//Declaración de variables
+VAR: LETRA(LETRA|DIGITO)*;
+
+//Declaración de comentarios
+COMENTARIO_BLOQUE : '/*' .*? '*/' -> skip ;
+COMENTARIO_LINEA : '//' .*? FIN_LINEA -> skip ;

@@ -9,7 +9,7 @@ j: NUM;
 INSTRUCCIONES
 j=0;
 max=s[j];
-mientras(j<=ultima_posicion(s)) hacer
+mientras(j<=s) hacer
 si (5>max) entonces
 max=s[j];
 i=j;

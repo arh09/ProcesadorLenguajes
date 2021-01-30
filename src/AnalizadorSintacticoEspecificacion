@@ -4,7 +4,7 @@ El programa P se estructura en 3 secciones: una dedicada a la declaración de va
 otra dedicada a  la  declaración  de subprogramas (sección SUBPROGRAMAS) y  otra  dedicada al  uso  de variables
 y  subprogramas (sección INSTRUCCIONES).
 
-    programa: PROGRAMA VARIABLES variables SUBPROGRAMAS subprogramas INSTRUCCIONES instrucciones EOF;
+    programa: PROGRAMA VARIABLES variables* SUBPROGRAMAS subprogramas INSTRUCCIONES instrucciones EOF;
 
 Cada variable declarada en un programa tiene un tipo invariable en dicho programa.
 Ejemplo de declaración de variables:
@@ -14,7 +14,9 @@ i,max,min:NUM;//i,max y min son variables numéricas y no pueden cambiar su tipo
                         //a lo largo del programa
 s:SEQ(NUM);//similarmente, s es una secuencia de números
 
-    variables: (VAR (COMA VAR)* DOS_PUNTOS tipo PyC)*;
+    variables: vars DOS_PUNTOS tipo PyC;
+
+    vars: VAR (COMA VAR)* ;
 
 Los tipos de datos considerados en P son dos clases (1) tipos elementales:
 tipo entero (NUM) y tipo lógico o booleano(LOG) y (2) tipos  no  elementales:
@@ -31,27 +33,27 @@ Los subprogramas se pueden dividir en funciones y procedimientos.
 Dentro de los subprogramas puede haber una declaración de variables
 y un bloque de instrucciones.
 
-    funcion:FUNCION fun VARIABLES variables INSTRUCCIONES instrucciones FFUNCION;
-    procedimiento: PROCEDIMIENTO proc VARIABLES variables INSTRUCCIONES instrucciones FPROCEDIMIENTO;
+    funcion:FUNCION fun VARIABLES variables* INSTRUCCIONES instrucciones FFUNCION;
+    procedimiento: PROCEDIMIENTO proc VARIABLES variables* INSTRUCCIONES instrucciones FPROCEDIMIENTO;
 
 Llamaremos predicado a la función que devuelve un valor lógico.
 
     fun: predicado | func;
         func: nombre_funcion  retornoFuncion;
 
-    predicado: expresionF PARENTESIS_ABIERTO params PARENTESIS_CERRADO
+    predicado: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO
     DEV PARENTESIS_ABIERTO LOG VAR PARENTESIS_CERRADO;
 
 La función tiene un conjunto (posiblemente vacío) de parámetros de entrada
 y un conjunto (no vacío) de parámetros de salida --> params.
 
-    nombre_funcion: expresionF PARENTESIS_ABIERTO params PARENTESIS_CERRADO;
+    nombre_funcion: expresionF PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO;
         expresionF: VAR (BB (VAR|NUMERO))*;
 
 Definimos los nombres de los subprogramas como combinaciones de nombres de variables,
 barrabajas y números --> ExpresionF.
 
-    retornoFuncion: DEV PARENTESIS_ABIERTO params PARENTESIS_CERRADO;
+    retornoFuncion: DEV PARENTESIS_ABIERTO (params)? PARENTESIS_CERRADO;
 
         params: elemental VAR COMA params
         | elemental VAR
@@ -71,58 +73,62 @@ Cualquier expresión numérica puede servir para codificar una posición en una 
 
 Las instrucciones de P son: asignación, condicional, iteración, ruptura de control,
 llamada a procedimiento o función, devolución de resultados de una función y
-mostrar por consola el valor de variables.
+mostrar por consola el valor de variables. Como realmente los procedimientos son aquellos
+métodos que no devuelven valor, solo los consideraremos como instrucción a ellos.
+**Las funciones suelen ser llamadas en asignaciones,
 El lenguaje P también dispone de comentarios de línea(//) y de bloque (/* */).
 
     instrucciones: (asignacion | condicional | iteracion | ruptura
-    | devolucion | llamada_funcion | mostrar)*;
+    | devolucion | llamada_procedimiento | mostrar)*;
 
-La asignaciónen P puede ser simple o múltiple.
+La llamada al procedimiento será de la misma estructura que la llamada a la función, pero
+concatenándolo con un punto y coma para concluir como una instrucción completa.
+    llamada_procedimiento: llamada_funcion PyC;
+
+La asignación en P puede ser simple o múltiple.
 
     asignacion: asignacion_simple | asignacion_multiple;
 
 s =[3,4,2,7,9,0,11]; //asignación simple
 x,y=1,x+2;           //asignación multiple
 
-    asignacion_simple: VAR IGUAL expresion PyC;
-    asignacion_multiple: VAR COMA VAR (COMA VAR)* IGUAL
-        (llamada_funcion | expresion COMA expresion (COMA expresion)*) PyC;
+    asignacion_simple: expr IGUAL expresion PyC;
 
-        expresion: expr_binaria
-            | expr_logica
-            | expr_secuencia
-            ;
+        expr: VAR| elemento_secuencia;
 
-           expr_binaria: NUMERO (operaciones)*
-               | VAR (operaciones)*
-               | elemento_secuencia (operaciones)*
-               | PARENTESIS_ABIERTO expresion_binaria PARENTESIS_CERRADO (operaciones)*
-               | ultima_posicion (operaciones)*
-               | llamada_funcion (operaciones)*
-               ;
+    asignacion_multiple: expr COMA expr (COMA expr)*
+                IGUAL expresion (COMA expresion)* PyC;
 
-               operaciones: SUMA (expr_binaria)
-                           |RESTA (expr_binaria)
-                           |MULT (expr_binaria)
-                           |DIV (expr_binaria)
-                           ;
-
-               elemento_secuencia: VAR CORCHETE_ABIERTO expr_binaria CORCHETE_CERRADO;
-
-               ultima_posicion: ULTIMAPOSICION PARENTESIS_ABIERTO VAR PARENTESIS_ABIERTO;
-
-               llamada_funcion: expresionF PARENTESIS_ABIERTO params PARENTESIS_ABIERTO;
-
-           expr_logica: T
-                    | F
-                    | VAR
+        expresion: VAR
                     | llamada_funcion
+                    | expr_binaria
+                    | expr_logica
+                    | expr_secuencia
                     | elemento_secuencia
                     ;
 
+           expr_binaria: NUMERO (operaciones)?
+                          | VAR (operaciones)?
+                          | elemento_secuencia (operaciones)?
+                          | PARENTESIS_ABIERTO expr_binaria PARENTESIS_CERRADO (operaciones)?
+                          | llamada_funcion (operaciones)?
+                          ;
+
+               operaciones: (SUMA|RESTA|MULT) expresion;
+
+               elemento_secuencia: VAR CORCHETE_ABIERTO expresion CORCHETE_CERRADO;
+
+               llamada_funcion: (expresionF| VACIA | ULTIMAPOSICION)
+                    PARENTESIS_ABIERTO (expresion (COMA expresion)*)? PARENTESIS_CERRADO;
+
+           expr_logica: T
+               | F
+               | elemento_secuencia
+               ;
+
            expr_secuencia: CORCHETE_ABIERTO
-                        (expr_binaria(COMA expr_binaria)* | expr_logica(COMA expr_logica)*)?
-                        CORCHETE_CERRADO;
+                   (expresion(COMA expresion)*)?
+                   CORCHETE_CERRADO;
 
 La instrucción condicional en P define un bloque de instrucciones cuya ejecución
 depende del valor de verdad de una condición.
@@ -141,7 +147,7 @@ fsi
 
         condicional:SI condicion ENTONCES instrucciones (bloque_opcional)? FSI;
 
-Las condicionesen P se construyen en base a igualdades(==) y desigualdades (!=,<,>,<=,>=)
+Las condiciones en P se construyen en base a igualdades(==) y desigualdades (!=,<,>,<=,>=)
 de expresiones del mismo tipo.
 Las  condiciones  se  pueden  concatenar  con  operadores conjunción (&&) y disyunción  (||).
 También se puede usar la negación (!).
@@ -176,17 +182,19 @@ fmientras
 P dispone de una instrucción de ruptura de control llamada ruptura.
 
     ruptura: RUPTURA PyC;
-**************
+
     devolucion: DEV expresion PyC;
 
 P dispone de un procedimiento predefinido llamado mostrar para mostrar por consola
-los valores de una lista de variables.
+los valores de una lista de variables, las cuales serán variables en sí o elementos de alguna
+secuencia.
 
-    mostrar: MOSTRAR PARENTESIS_ABIERTO VAR PARENTESIS_CERRADO PyC;
+    mostrar: MOSTRAR PARENTESIS_ABIERTO (VAR|elemento_secuencia)
+    (COMA (VAR|elemento_secuencia))* PARENTESIS_CERRADO PyC;
 
 La declaración de subprogramas en P permite hacer llamadas a los mismos en la zona
 de instrucciones.En el siguiente ejemplo se muestra una llamada a función:
 x,y = mayor(s);//llamada a funcion
 
-    asignacion_multiple: VAR COMA VAR (COMA VAR)* IGUAL
-        (llamada_funcion | expresion COMA expresion (COMA expresion)*) PyC;
+    asignacion_multiple: expr COMA expr (COMA expr)*
+                     IGUAL expresion (COMA expresion)* PyC;

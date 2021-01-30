@@ -21,7 +21,7 @@ max=s[i];
         si (s[i]<min) entonces
             min=s[i];
             fsi
-mostrar(min,max);
+mostrar(m[i],popo);
 
 i=i+1;
 fmientras

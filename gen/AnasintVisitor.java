@@ -1,4 +1,4 @@
-// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\AnalizadorSintacticoEspecificacion.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -21,6 +21,12 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariables(Anasint.VariablesContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#vars}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVars(Anasint.VarsContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#tipo}.
 	 * @param ctx the parse tree
@@ -112,6 +118,12 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstrucciones(Anasint.InstruccionesContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link Anasint#llamada_procedimiento}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLlamada_procedimiento(Anasint.Llamada_procedimientoContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link Anasint#asignacion}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -123,6 +135,12 @@ public interface AnasintVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitAsignacion_simple(Anasint.Asignacion_simpleContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link Anasint#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr(Anasint.ExprContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link Anasint#asignacion_multiple}.
 	 * @param ctx the parse tree

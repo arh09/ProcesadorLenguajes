@@ -1,0 +1,18 @@
+PROGRAMA
+VARIABLES
+   i,j,e,p:NUM;
+   s,t:SEQ(NUM);
+SUBPROGRAMAS
+   FUNCION f() dev (SEQ(NUM) r)
+   VARIABLES
+   INSTRUCCIONES
+      r=[1,2,3];
+      dev r;
+   FFUNCION
+INSTRUCCIONES
+   s,t=f(),[1,3,4];
+   //mostrar(s,t);
+   mostrar(s);mostrar(t);
+   s,t=t,s;
+   //mostrar(s,t);
+   mostrar(s);mostrar(t);

@@ -1,4 +1,4 @@
-// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\Anasint.g4 by ANTLR 4.8
+// Generated from C:/Users/Alberto Rubio/OneDrive/Desktop/ALBERTOU/ETSII/PL/proyectoPL/src\AnalizadorSintacticoEspecificacion.g4 by ANTLR 4.8
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -26,6 +26,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariables(Anasint.VariablesContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#vars}.
+	 * @param ctx the parse tree
+	 */
+	void enterVars(Anasint.VarsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#vars}.
+	 * @param ctx the parse tree
+	 */
+	void exitVars(Anasint.VarsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#tipo}.
 	 * @param ctx the parse tree
@@ -177,6 +187,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 */
 	void exitInstrucciones(Anasint.InstruccionesContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link Anasint#llamada_procedimiento}.
+	 * @param ctx the parse tree
+	 */
+	void enterLlamada_procedimiento(Anasint.Llamada_procedimientoContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#llamada_procedimiento}.
+	 * @param ctx the parse tree
+	 */
+	void exitLlamada_procedimiento(Anasint.Llamada_procedimientoContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link Anasint#asignacion}.
 	 * @param ctx the parse tree
 	 */
@@ -196,6 +216,16 @@ public interface AnasintListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAsignacion_simple(Anasint.Asignacion_simpleContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link Anasint#expr}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpr(Anasint.ExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link Anasint#expr}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpr(Anasint.ExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link Anasint#asignacion_multiple}.
 	 * @param ctx the parse tree

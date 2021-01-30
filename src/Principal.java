@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public class Principal {
     public static void main(String[] args) throws Exception {
-        String fileName = "level2_sin_1.txt";
+        String fileName = "level1_ord2.txt";
         CharStream input = CharStreams.fromFileName(fileName);
         Analex analex = new Analex(input);
         CommonTokenStream tokens = new CommonTokenStream(analex);
@@ -29,12 +29,12 @@ public class Principal {
         frame.setSize(500, 400);
         frame.setVisible(true);
 
-    //    Anasem anasem = new Anasem();
-    //    anasem.visit(tree);
+        Anasem anasem = new Anasem();
+        anasem.visit(tree);
 
-     //   ParseTreeWalker walker = new ParseTreeWalker();
-     //   Compilador compilador = new Compilador();
-   //     compilador.init(fileName);
-   //     walker.walk(compilador, tree);
+        ParseTreeWalker walker = new ParseTreeWalker();
+        Compilador compilador = new Compilador();
+        compilador.init(fileName);
+        walker.walk(compilador, tree);
     }
 }

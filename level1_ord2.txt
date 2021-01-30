@@ -1,0 +1,23 @@
+PROGRAMA
+VARIABLES
+   i,k,e,p,m:NUM;
+   s:SEQ(NUM);
+SUBPROGRAMAS
+INSTRUCCIONES
+   s,i=[9,3,5,2,-1,0,-3],0;
+
+   mientras (i<ultima_posicion(s)) hacer
+      m=i;
+      k=i+1;
+      mientras (k<=ultima_posicion(s)) hacer
+         si (s[k]<s[m]) entonces
+            m=k;
+         fsi
+         k=k+1;
+      fmientras
+      //mostrar(m,s[m]);
+      mostrar(m);mostrar(s);
+      s[i],s[m]=s[m],s[i];
+      i=i+1;
+   fmientras
+   mostrar(s);
